@@ -19,6 +19,8 @@ const sendEmail = async options => {
         text: options.message
     }
 
+    
+
     const info = await transporter.sendMail(message)
 
     try {

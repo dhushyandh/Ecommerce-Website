@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearError, clearUserUpdated } from "../../slices/userSlice";
 import { getUser, updateUser } from "../../actions/userActions";
@@ -17,6 +17,7 @@ export default function UpdateUser() {
 
 
     const { loading, isUserUpdated = false, error, user } = useSelector(state => state.userState);
+    const { user: authUser } = useSelector(state => state.authState)
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -52,16 +53,12 @@ export default function UpdateUser() {
         dispatch(updateUser(userId, formData));
     }
     useEffect(() => {
-        if (user._id) {
+        if (user && user._id) {
             setName(user.name);
             setEmail(user.email);
             setRole(user.role);
         }
     }, [user])
-
-
-
-
     return (
         <div className="row">
             <div className="col-12 col-md-2">
@@ -83,11 +80,10 @@ export default function UpdateUser() {
                                     value={name}
                                 />
                             </div>
-
                             <div className="form-group">
                                 <label htmlFor="price_field">Email</label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     id="price_field"
                                     onChange={e => setEmail(e.target.value)}
                                     value={email}
@@ -95,12 +91,12 @@ export default function UpdateUser() {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="category_field">Role</label>
-                                <select className="form-control" id="category_field" value={role} onChange={e => setRole(e.target.value)}  >
+                                <select disabled={user._id === authUser._id} className="form-control" id="category_field" value={role} onChange={e => setRole(e.target.value)}  >
                                     <option value="admin">Admin</option>
                                     <option value="user">User</option>
                                 </select>
                             </div>
-                            
+
                             <button
                                 id="login_button"
                                 type="submit"

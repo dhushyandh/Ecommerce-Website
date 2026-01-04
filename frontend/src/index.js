@@ -5,7 +5,8 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || '';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://16.170.249.115:8000/api';
+axios.defaults.withCredentials = false;
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

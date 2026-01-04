@@ -2,6 +2,9 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "@stripe/react-stripe-js": "^5.4.1",

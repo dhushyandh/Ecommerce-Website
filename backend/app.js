@@ -27,8 +27,20 @@ app.use('/api/v1/', order);
 app.use('/api/v1/', payment);
 
 if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname,'../frontend/build')));
+    // Serve static assets from the React build
+    app.use('/static', express.static(path.join(__dirname, '../frontend/build/static'), { maxAge: '1d' }));
+    app.use(express.static(path.join(__dirname, '../frontend/build')));
 
+    // Explicitly serve common root assets to avoid 404/mime issues on some hosts
+    app.get('/manifest.json', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../frontend/build/manifest.json'));
+    });
+
+    app.get('/service-worker.js', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../frontend/build/service-worker.js'));
+    });
+
+    // Fallback: serve index.html for any other route
     app.get(/.*/,(req,res)=>{
         res.sendFile(path.resolve(__dirname,'../frontend/build/index.html'))
     })

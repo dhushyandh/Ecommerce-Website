@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: mern-ecom
+    env: node
+    plan: free
+    buildCommand: |
+      cd frontend && npm ci && npm run build
+      cd .. && npm ci
+    startCommand: node backend/server.js
+    healthCheckPath: /api/v1/
+    autoDeploy: true

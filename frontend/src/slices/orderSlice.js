@@ -56,7 +56,7 @@ const orderSlice = createSlice({
             state.adminOrders = action.payload.orders;
         },
         adminOrdersFail(state, action) {
-            state.loading = false,
+            state.loading = false;
             state.error = action.payload;
         },
         deleteOrderRequest(state) {

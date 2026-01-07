@@ -27,8 +27,15 @@ app.use('/api/v1/', order);
 app.use('/api/v1/', payment);
 
 if(process.env.NODE_ENV === 'production'){
-    // Serve static assets from the React build
-    app.use('/static', express.static(path.join(__dirname, '../frontend/build/static'), { maxAge: '1d' }));
+    // Serve static assets from the React build and ensure correct MIME types
+    app.use('/static', express.static(path.join(__dirname, '../frontend/build/static'), {
+        maxAge: '1d',
+        setHeaders: (res, filePath) => {
+            if (filePath.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
+            if (filePath.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
+            if (filePath.endsWith('.json')) res.setHeader('Content-Type', 'application/json');
+        }
+    }));
     // Fallback explicit handlers to set correct MIME types in case host overrides them
     app.get('/static/js/:file', (req, res) => {
         const filePath = path.join(__dirname, '../frontend/build/static/js', req.params.file);

@@ -29,6 +29,21 @@ app.use('/api/v1/', payment);
 if(process.env.NODE_ENV === 'production'){
     // Serve static assets from the React build
     app.use('/static', express.static(path.join(__dirname, '../frontend/build/static'), { maxAge: '1d' }));
+    // Fallback explicit handlers to set correct MIME types in case host overrides them
+    app.get('/static/js/:file', (req, res) => {
+        const filePath = path.join(__dirname, '../frontend/build/static/js', req.params.file);
+        res.type('application/javascript');
+        res.sendFile(filePath, err => {
+            if (err) res.status(err.status || 404).end();
+        });
+    });
+    app.get('/static/css/:file', (req, res) => {
+        const filePath = path.join(__dirname, '../frontend/build/static/css', req.params.file);
+        res.type('text/css');
+        res.sendFile(filePath, err => {
+            if (err) res.status(err.status || 404).end();
+        });
+    });
     app.use(express.static(path.join(__dirname, '../frontend/build')));
 
     // Explicitly serve common root assets to avoid 404/mime issues on some hosts

@@ -1,7 +1,22 @@
 const catchAsyncError = require('../middlewares/catchAsyncError');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+// Lazily initialize Stripe so missing env vars don't crash the app at require-time
+let stripe = null;
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+if (stripeKey) {
+    try {
+        stripe = require('stripe')(stripeKey);
+    } catch (err) {
+        // keep stripe null and let handlers return a clear error
+        stripe = null;
+    }
+}
 
 exports.processPayment = catchAsyncError(async (req, res, next) => {
+    if (!stripe) {
+        const err = new Error('Stripe secret key not configured. Set STRIPE_SECRET_KEY in environment.');
+        err.statusCode = 500;
+        throw err;
+    }
     const paymentIntent = await stripe.paymentIntents.create({
         amount: req.body.amount,
         currency:"usd",

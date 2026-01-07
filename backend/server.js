@@ -4,6 +4,11 @@ const connectDatabase = require('./config/database');
 const PORT = process.env.PORT || 5000;
 
 // Connect to DB first, then start the server. Fail fast with helpful message.
+if (typeof connectDatabase !== 'function') {
+    console.error('connectDatabase is not a function. Check backend/config/database.js export.');
+    process.exit(1);
+}
+
 connectDatabase()
     .then(() => {
         const server = app.listen(PORT, () => {

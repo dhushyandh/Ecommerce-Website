@@ -1,11 +1,23 @@
 const app = require('./app');
-const connectDatabase = require('./config/database');
+const path = require('path');
+
+
+let connectDatabase;
+try {
+    const dbMod = require(path.join(__dirname, 'config', 'database.js'));
+    if (typeof dbMod === 'function') connectDatabase = dbMod;
+    else if (dbMod && typeof dbMod.default === 'function') connectDatabase = dbMod.default;
+    else if (dbMod && typeof dbMod.connectDatabase === 'function') connectDatabase = dbMod.connectDatabase;
+    else connectDatabase = undefined;
+} catch (err) {
+    console.error('Error loading database module:', err && err.message);
+    connectDatabase = undefined;
+}
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to DB first, then start the server. Fail fast with helpful message.
 if (typeof connectDatabase !== 'function') {
-    console.error('connectDatabase is not a function. Check backend/config/database.js export.');
+    console.error('connectDatabase is not available. Check backend/config/database.js export and that it exists.');
     process.exit(1);
 }
 

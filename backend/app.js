@@ -33,16 +33,26 @@ app.use("/api/v1", order);
 app.use("/api/v1", payment);
 
 // =======================
-// PRODUCTION (VITE BUILD)
+// PRODUCTION (CRA build)
 // =======================
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  // Serve static files from the React build
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  app.get(/.*/, (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "../frontend/dist/index.html")
-    );
+  // Serve manifest/service-worker/index from build; use app.use fallback
+  app.get('/manifest.json', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/build/manifest.json'));
   });
+
+  app.get('/service-worker.js', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/build/service-worker.js'));
+  });
+
+  // Fallback for client-side routing — use app.use so router param parsing isn't involved
+  app.use((req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
+  });
+
 }
 
 // Error middleware (LAST)

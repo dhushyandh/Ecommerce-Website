@@ -42,10 +42,10 @@ export default function Payment() {
         shippingInfo
     }
     if (orderInfo) {
-        order.itemsPrice = orderInfo.itemsPrice,
-            order.shippingPrice = orderInfo.shippingPrice,
-            order.taxPrice = orderInfo.taxPrice,
-            order.totalPrice = orderInfo.totalPrice
+        order.itemsPrice = orderInfo.itemsPrice;
+        order.shippingPrice = orderInfo.shippingPrice;
+        order.taxPrice = orderInfo.taxPrice;
+        order.totalPrice = orderInfo.totalPrice;
     }
     useEffect(() => {
         if (shippingInfo && Object.keys(shippingInfo).length > 0) {

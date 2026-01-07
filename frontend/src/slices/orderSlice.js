@@ -33,7 +33,7 @@ const orderSlice = createSlice({
             state.userOrders = action.payload.orders;
         },
         userOrdersFail(state, action) {
-            state.loading = false,
+            state.loading = false;
             state.error = action.payload;
         },
         orderDetailRequest(state) {
@@ -44,8 +44,8 @@ const orderSlice = createSlice({
             state.orderDetail = action.payload.order
         },
         orderDetailFail(state, action) {
-            state.loading = false,
-            state.error = action.payload;
+              state.loading = false;
+              state.error = action.payload;
         },
         // ADMIN ORDERS
         adminOrdersRequest(state) {
@@ -67,8 +67,8 @@ const orderSlice = createSlice({
             state.isOrderDeleted = true;
         },
         deleteOrderFail(state, action) {
-            state.loading = false,
-            state.error = action.payload;
+              state.loading = false;
+              state.error = action.payload;
         },
         clearOrderDeleted(state) {
             state.isOrderDeleted = false;
@@ -81,8 +81,8 @@ const orderSlice = createSlice({
             state.isOrderUpdated = true;
         },
         updateOrderFail(state, action) {
-            state.loading = false,
-            state.error = action.payload;
+              state.loading = false;
+              state.error = action.payload;
         },
         clearOrderUpdated(state) {
             state.isOrderUpdated = false;

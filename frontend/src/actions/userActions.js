@@ -225,7 +225,8 @@ export const getUser = (id) => async (dispatch) => {
         const { data } = await axios.get(`/api/v1/admin/user/${id}`, {
             withCredentials: true
         });
-        dispatch(userSuccess(data.user));
+        // userSuccess expects payload shaped as { user: ... }
+        dispatch(userSuccess({ user: data.user }));
     }
     catch (error) {
         dispatch(
@@ -255,13 +256,16 @@ export const updateUser = (id,formData) => async (dispatch) => {
     try {
         dispatch(updateUserRequest());
 
+        const isFormData = formData instanceof FormData;
+        const config = {
+            withCredentials: true,
+            headers: isFormData ? { 'Content-type': 'multipart/form-data' } : { 'Content-type': 'application/json' }
+        };
+
         await axios.put(
             `/api/v1/admin/user/${id}`,
             formData,
-            {
-                headers: { 'Content-type': 'application/json' },
-                withCredentials: true
-            }
+            config
         );
 
         dispatch(updateUserSuccess());

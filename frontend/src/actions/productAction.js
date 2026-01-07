@@ -116,7 +116,7 @@ export const getReviews = (id) => async (dispatch) => {
 
     try {
         dispatch(reviewsRequest())
-        const { data } = await axios.get(`/api/v1/admin/reviews`, { params: { id } });
+        const { data } = await axios.get(`/api/v1/admin/reviews`, { params: { id }, withCredentials: true });
 
         dispatch(reviewsSuccess(data.reviews));
 
@@ -130,7 +130,7 @@ export const deleteReview = (productId, id) => async (dispatch) => {
 
     try {
         dispatch(deleteReviewRequest())
-        await axios.delete(`/api/v1/admin/review`, { params: { productId, id } });
+        await axios.delete(`/api/v1/admin/review`, { params: { productId, id }, withCredentials: true });
 
         dispatch(deleteReviewSuccess());
 

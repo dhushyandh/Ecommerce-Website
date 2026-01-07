@@ -4,7 +4,6 @@ import { createReview, getProduct } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loader from "../layouts/Loader";
-import { Carousel } from 'react-bootstrap';
 import MetaData from "../layouts/MetaData";
 import { addCartItem } from "../../actions/cartActions";
 import { Modal } from 'react-bootstrap'
@@ -24,19 +23,21 @@ export default function ProductDetail() {
     const dispatch = useDispatch();
     const { id } = useParams();
     const [quantity, setQuantity] = useState(1);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
     const increaseQuantity = () => {
-        const count = document.querySelector('.count')
         const stock = product?.stock ?? 0;
-        if (stock == 0 || count.valueAsNumber >= stock) return;
-        const qty = count.valueAsNumber + 1;
-        setQuantity(qty);
+        setQuantity(prev => {
+            const next = prev + 1;
+            if (stock === 0) return prev;
+            return next > stock ? stock : next;
+        });
     }
     const decreaseQuantity = () => {
-        const count = document.querySelector('.count')
-        if (count.valueAsNumber == 1) return;
-        const qty = count.valueAsNumber - 1;
-        setQuantity(qty);
+        setQuantity(prev => {
+            const next = prev - 1;
+            return next < 1 ? 1 : next;
+        });
     }
     const [show, setShow] = useState(false);
 
@@ -81,6 +82,8 @@ export default function ProductDetail() {
                 dispatch(clearProduct());
             }
         }
+        // Reset selected image when product changes
+        setSelectedImageIndex(0);
     }, [id, dispatch, isReviewSubmitted, error]);
 
 
@@ -88,106 +91,115 @@ export default function ProductDetail() {
 
     return (
         <Fragment>
-            {(loading || !product || !product._id) ? <Loader /> :
+            {(loading || !product || !product._id) ? (
+                <Loader />
+            ) : (
                 <Fragment>
                     <MetaData title={product?.name || 'Product'} />
-                    <div className="row f-flex justify-content-around">
-                        <div className="col-12 col-lg-5 img-fluid" id="product_image">
-                            <Carousel pause='hover'>
-                                {product.images && product.images.map(image =>
-                                    <Carousel.Item key={image._id}>
-                                        <img className="d-block w-100" src={image.image} alt={product?.name} height="500" width="500" />
-                                    </Carousel.Item>
-                                )}
-                            </Carousel>
-                        </div>
 
-                        <div className="col-12 col-lg-5 mt-5">
-                            <h3>{product?.name}</h3>
-                            <p id="product_id">{product?._id}</p>
+                    <div className="product-detail container">
+                        <div className="product-gallery" id="product_image">
+                                <img
+                                    src={product?.images && product.images.length > 0 ? product.images[selectedImageIndex].image : '/images/default.png'}
+                                    alt={product?.name}
+                                    className="img-fluid"
+                                />
 
-                            <hr />
-
-                            <div className="rating-outer">
-                                <div className="rating-inner" style={{ width: `${(product?.ratings ?? 0) / 5 * 100}%` }}></div>
+                                {product?.images && product.images.length > 1 ? (
+                                    <div className="thumbnails">
+                                        {product.images.map((img, i) => (
+                                            <img
+                                                key={img.image + i}
+                                                src={img.image}
+                                                alt={`${product?.name}-${i}`}
+                                                className={`thumb ${i === selectedImageIndex ? 'active' : ''}`}
+                                                onClick={() => setSelectedImageIndex(i)}
+                                            />
+                                        ))}
+                                    </div>
+                                ) : null}
                             </div>
-                            <span id="no_of_reviews">({product?.numOfReviews ?? 0} Reviews)</span>
 
-                            <hr />
+                        <div className="product-info">
+                            <div className="product-main">
+                                <h3>{product?.name}</h3>
+                                <p id="product_id">{product?._id}</p>
 
-                            <p id="product_price">₹{product?.price ?? 0}</p>
-                            <div className="stockCounter d-inline">
-                                <span className="btn btn-danger minus" onClick={decreaseQuantity}>-</span>
-
-                                <input type="number" className="form-control count d-inline" value={quantity} readOnly />
-
-                                <span className="btn btn-primary plus" onClick={increaseQuantity}>+</span>
-                            </div>
-                            <button type="button" id="cart_btn" disabled={(product?.stock ?? 0) == 0 ? true : false}
-                                onClick={() => {
-                                    toast('Item Added To Cart !', {
-                                        type: 'success',
-                                        theme: 'light',
-                                        position: 'bottom-right',
-                                    })
-                                    dispatch(addCartItem(product?._id, quantity))
-                                }
-                                } className="btn btn-primary d-inline ml-4">Add to Cart</button>
-
-                            <hr />
-
-                            <p>Status: <span className={((product?.stock ?? 0) > 0) ? 'greenColor' : 'redColor'} id="stock_status">{(product?.stock ?? 0) > 0 ? 'In Stock' : 'Out of Stock'}</span></p>
-
-                            <hr />
-
-                            <h4 className="mt-2">Description:</h4>
-                            <p>{product?.description}</p>
-                            <hr />
-                            <p id="product_seller mb-3">Sold by: <strong>{product?.seller}</strong></p>
-                            {user ?
-                                <button id="review_btn" type="button" onClick={handleShow} className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal">
-                                    Submit Your Review
-                                </button> :
-                                <div className="alert alert-danger mt-5">Login To Post Your Review.</div>
-                            }
-                            <div className="row mt-2 mb-5">
-                                <div className="rating w-50">
-                                    <Modal show={show} onHide={handleClose}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Submit Review</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <ul className="stars" >
-                                                {
-                                                    [1, 2, 3, 4, 5].map(star => (
-                                                        <li
-                                                            key={star}
-                                                            value={star}
-                                                            onClick={() => setRating(star)}
-                                                            className={`star ${star <= rating ? 'orange' : ''}`}
-                                                            onMouseOver={(e) => e.target.classList.add('yellow')}
-                                                            onMouseOut={(e) => e.target.classList.remove('yellow')}
-                                                        ><i className="fa fa-star"></i></li>
-
-                                                    ))
-                                                }
-                                            </ul>
-
-                                            <textarea onChange={(e) => setComment(e.target.value)} name="review" id="review" className="form-control mt-3">
-
-                                            </textarea></Modal.Body>
-                                        <button aria-label="close" disabled={loading} onClick={reviewHandler} className="btn my-3 float-right review-btn px-4 text-white">Submit</button>
-                                    </Modal>
+                                <div className="rating-row">
+                                    <div className="rating-outer">
+                                        <div className="rating-inner" style={{ width: `${(product?.ratings ?? 0) / 5 * 100}%` }}></div>
+                                    </div>
+                                    <span id="no_of_reviews">({product?.numOfReviews ?? 0} Reviews)</span>
                                 </div>
 
+                                <div className="price-box mt-3">
+                                    <div className="price">₹{product?.price ?? 0}</div>
+                                    <div className="stock-info">Status: <span className={((product?.stock ?? 0) > 0) ? 'greenColor' : 'redColor'} id="stock_status">{(product?.stock ?? 0) > 0 ? 'In Stock' : 'Out of Stock'}</span></div>
+
+                                    <div className="d-flex align-items-center justify-content-between w-100 mt-2">
+                                        <div className="stockCounter">
+                                            <button className="btn btn-ghost minus" onClick={decreaseQuantity}>-</button>
+                                            <input type="number" className="form-control count" value={quantity} readOnly />
+                                            <button className="btn btn-ghost plus" onClick={increaseQuantity}>+</button>
+                                        </div>
+                                        <button type="button" id="cart_btn" disabled={(product?.stock ?? 0) === 0}
+                                            onClick={() => {
+                                                toast('Item Added To Cart !', {
+                                                    type: 'success',
+                                                    theme: 'light',
+                                                    position: 'bottom-right',
+                                                });
+                                                dispatch(addCartItem(product?._id, quantity));
+                                            }} className="btn add-btn">Add to Cart</button>
+                                    </div>
+                                </div>
+
+                                <div className="product-description">
+                                    <h4>Description</h4>
+                                    <p>{product?.description}</p>
+                                    <p className="mt-2">Sold by: <strong>{product?.seller}</strong></p>
+                                    {user ? (
+                                        <button id="review_btn" type="button" onClick={handleShow} className="btn mt-3 ui-btn" data-toggle="modal" data-target="#ratingModal">
+                                            Submit Your Review
+                                        </button>
+                                    ) : (
+                                        <div className="alert alert-danger mt-3">Login To Post Your Review.</div>
+                                    )}
+                                </div>
                             </div>
 
-                        </div>
+                            <Modal show={show} onHide={handleClose}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Submit Review</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <ul className="stars">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <li
+                                                key={star}
+                                                value={star}
+                                                onClick={() => setRating(star)}
+                                                className={`star ${star <= rating ? 'orange' : ''}`}
+                                                onMouseOver={(e) => e.target.classList.add('yellow')}
+                                                onMouseOut={(e) => e.target.classList.remove('yellow')}
+                                            >
+                                                <i className="fa fa-star" />
+                                            </li>
+                                        ))}
+                                    </ul>
 
+                                    <textarea onChange={(e) => setComment(e.target.value)} name="review" id="review" className="form-control mt-3" />
+                                </Modal.Body>
+                                <div className="p-3 text-end">
+                                    <button aria-label="close" disabled={loading} onClick={reviewHandler} className="btn my-0 review-btn px-4 text-white">Submit</button>
+                                </div>
+                            </Modal>
+                        </div>
                     </div>
-                    {product?.reviews && product.reviews.length > 0 ?
-                        <ProductReview reviews={product.reviews} /> : null}
-                </Fragment>}
+
+                    {product?.reviews && product.reviews.length > 0 ? <ProductReview reviews={product.reviews} /> : null}
+                </Fragment>
+            )}
         </Fragment>
-    )
+    );
 }

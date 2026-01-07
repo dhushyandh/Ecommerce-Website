@@ -40,7 +40,7 @@ export default function UpdateUser() {
             return;
         }
         dispatch(getUser(userId));
-    }, [dispatch, isUserUpdated, error])
+    }, [dispatch, isUserUpdated, error, userId])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -91,7 +91,7 @@ export default function UpdateUser() {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="category_field">Role</label>
-                                <select disabled={user._id === authUser._id} className="form-control" id="category_field" value={role} onChange={e => setRole(e.target.value)}  >
+                                <select disabled={user && user._id === authUser._id} className="form-control" id="category_field" value={role} onChange={e => setRole(e.target.value)}  >
                                     <option value="admin">Admin</option>
                                     <option value="user">User</option>
                                 </select>

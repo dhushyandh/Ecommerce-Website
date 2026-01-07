@@ -20,20 +20,20 @@ export default function Header() {
 
 
   return (
-    <nav className="navbar row">
+    <nav className="navbar row ui-nav">
       <div className="col-12 col-md-3">
-        <div className="navbar-brand">
+        <div className="navbar-brand ui-brand">
           <Link to="/">
-            <img width="150px" alt="JVL cart logo" src="/images/logo.png" />
+            <img alt="JVL cart logo" src="/images/logo.png" className="ui-logo"/>
           </Link>
         </div>
       </div>
 
-      <div className="col-12 col-md-6 mt-2 mt-md-0">
+      <div className="col-12 col-md-8 mt-2 mt-md-0 ui-search-area">
         <Search />
       </div>
 
-      <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
+      <div className="col-12 col-md-2 mt-4 mt-md-0 text-center ui-user-area">
         {isAuthenticated ?
           (
             <Dropdown className="d-inline">
@@ -44,19 +44,28 @@ export default function Header() {
                 </figure>
                 <span>{user.name}</span>
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu align="end">
+                <div className="dropdown-header user-menu-header">
+                  <Image className="rounded-circle" width={48} src={user?.avatar || "/images/default_avatar.png"} alt={user?.name} />
+                  <div className="user-menu-info">
+                    <div className="user-menu-name">{user.name}</div>
+                    <div className="user-menu-email muted">{user.email}</div>
+                  </div>
+                </div>
+                <Dropdown.Divider />
                 {user.role === 'admin' && <Dropdown.Item onClick={() => { navigate('/admin/dashboard') }} className="text-dark ">DashBoard</Dropdown.Item>}
                 <Dropdown.Item onClick={() => { navigate('/myprofile') }} className="text-dark ">Profile</Dropdown.Item>
                 <Dropdown.Item onClick={() => { navigate('/orders') }} className="text-dark ">My Orders</Dropdown.Item>
+                <Dropdown.Divider />
                 <Dropdown.Item onClick={logoutHandler} className="text-danger ">LogOut</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           ) :
-          <Link to="/login" className="btn" id="login_btn">Login</Link>
+          <Link to="/login" className="btn ui-btn" id="login_btn">Login</Link>
         }
 
-        <Link to="/cart" id="cart" className="ml-3">Cart</Link>
-        <span className="ml-1" id="cart_count">{cartItems.length}</span>
+        <Link to="/cart" id="cart" className="ml-3 ui-link">Cart</Link>
+        <span className="ml-1 ui-badge" id="cart_count">{cartItems.length}</span>
       </div>
     </nav>
   )

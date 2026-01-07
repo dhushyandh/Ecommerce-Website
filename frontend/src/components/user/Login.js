@@ -16,7 +16,9 @@ export default function Login() {
     const location = useLocation();
 
     const { loading, error, isAuthenticated } = useSelector(state => state.authState);
-    const redirect = location.search ? '/' + location.search.split('=')[1] : '/';
+    const params = new URLSearchParams(location.search);
+    const redirectParam = params.get('redirect');
+    const redirect = redirectParam ? decodeURIComponent(redirectParam) : '/';
 
     const submitHandler = (e) => {
         e.preventDefault();

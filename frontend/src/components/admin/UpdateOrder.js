@@ -73,6 +73,7 @@ export default function UpdateOrder() {
                             <p><b>Phone:</b> {shippingInfo.phoneNo}</p>
                             <p className="mb-4"><b>Address:</b>{shippingInfo.address},{shippingInfo.city},{shippingInfo.postalCode},{shippingInfo.state},{shippingInfo.country}</p>
                             <p><b>Amount:</b> ₹{totalPrice}</p>
+                            <p><b>Order Time:</b> {orderDetail?.createdAt ? new Date(orderDetail.createdAt).toLocaleString() : '—'}</p>
 
                             <hr />
 

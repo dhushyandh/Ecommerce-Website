@@ -2,13 +2,10 @@
   "name": "mern-ecom-backend",
   "version": "1.0.0",
   "main": "server.js",
-  "engines": {
-    "node": "24.x"
-  },
   "scripts": {
     "start": "node server.js",
     "dev": "set NODE_ENV=development&&nodemon server.js",
-    "prod": "NODE_ENV=production node server.js"
+    "prod": "set NODE_ENV=production&&node server.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

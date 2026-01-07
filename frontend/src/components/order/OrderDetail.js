@@ -31,7 +31,7 @@ export default function OrderDetail() {
                                 <p><b>Phone:</b> {shippingInfo.phone}</p>
                                 <p className="mb-4"><b>Address:</b>{shippingInfo.address},{shippingInfo.city},{shippingInfo.postalCode},{shippingInfo.state},{shippingInfo.country}</p>
                                 <p><b>Amount:</b> ₹{totalPrice}</p>
-
+                                <p><b>Order Time:</b> {orderDetail?.createdAt ? new Date(orderDetail.createdAt).toLocaleString() : '—'}</p>
                                 <hr />
 
                                 <h4 className="my-4">Payment</h4>

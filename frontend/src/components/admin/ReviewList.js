@@ -50,12 +50,12 @@ export default function ReviewList() {
             data.rows.push({
                 id: review._id,
                 rating: review.rating,
-                user: review.user,
+                user: (review.user && review.user.name) ? review.user.name : (typeof review.user === 'string' ? review.user : ''),
                 comment: review.comment,
                 actions: (
                     <Fragment>
-                        <Button onClick={e => deleteHandler(e, review.user._id)} className="btn btn-danger py-1 px-2 ml-2">
-                            <i className="fa fa-trash" ></i>
+                        <Button onClick={e => deleteHandler(e, review._id)} className="btn btn-danger py-1 px-2 ml-2 btn-icon" title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>
                         </Button>
                     </Fragment>
                 )
@@ -65,8 +65,9 @@ export default function ReviewList() {
     }
 
     const deleteHandler = (e, id) => {
-        e.target.disabled = true;
-        dispatch(deleteReview(id));
+        const btn = e.currentTarget;
+        if (btn) btn.disabled = true;
+        dispatch(deleteReview(productId, id));
     }
 
     const submitHandler = (e) => {

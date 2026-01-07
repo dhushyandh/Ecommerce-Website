@@ -50,16 +50,16 @@ export default function Home() {
           <MetaData title={'Buy Products Here!'} />
           <h1 id="products_heading">Latest Products</h1>
 
-          <section id="products" className="container mt-5">
-            <div className="row">
+          <section id="products" className="container mt-5 ui-container">
+            <div className="products-grid ui-grid-row">
               {products && products.map(product => (
-                <Products col={3} key={product._id} product={product} />
+                <Products key={product._id} product={product} />
               ))}
 
             </div>
           </section>
           {productsCount > 0 && productsCount > resPerPage ?
-            <div className="d-flex justify-content-center mt-5">
+            <div className="d-flex justify-content-center mt-5 ui-center">
               <Pagination
                 activePage={currentPage}
                 onChange={setCurrentPageNo}

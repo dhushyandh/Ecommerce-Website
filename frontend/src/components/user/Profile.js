@@ -29,7 +29,7 @@ export default function Profile() {
                 <h4>Email Address</h4>
                 <p>{user.email}</p>
 
-                <h4>Joined</h4>
+                <h4>Joined At</h4>
                 <p>{String(user.createdAt).substring(0, 10)}</p>
 
                 <Link to="/orders" className="btn btn-danger btn-block mt-5">

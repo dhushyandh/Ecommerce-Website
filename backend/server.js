@@ -5,7 +5,7 @@ const connectDatabase = require('./config/database');
 connectDatabase();
 
 
-const server = app.listen(process.env.PORT, '0.0.0.0', () => {
+const server = app.listen(process.env.PORT, () => {
     console.log(`MY Server Listening to the port ${process.env.PORT} in ${process.env.NODE_ENV} Mode`)
 })
 

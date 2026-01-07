@@ -16,12 +16,24 @@ try {
 
 const PORT = process.env.PORT || 5000;
 
-if (typeof connectDatabase !== 'function') {
-    console.error('connectDatabase is not available. Check backend/config/database.js export and that it exists.');
-    process.exit(1);
+// Ensure we never call `.then` on undefined. Wrap the connector in a Promise
+// so deployments with unexpected module shapes fail with a clear message
+// instead of a TypeError.
+let dbPromise;
+try {
+    if (typeof connectDatabase === 'function') {
+        dbPromise = Promise.resolve(connectDatabase());
+    } else {
+        const err = new Error('connectDatabase is not a function. Check backend/config/database.js export.');
+        console.error(err.message);
+        dbPromise = Promise.reject(err);
+    }
+} catch (err) {
+    console.error('Error while calling connectDatabase():', err && err.message);
+    dbPromise = Promise.reject(err);
 }
 
-connectDatabase()
+dbPromise
     .then(() => {
         const server = app.listen(PORT, () => {
             console.log(`MY Server Listening to the port ${PORT} in ${process.env.NODE_ENV || 'development'} Mode`);

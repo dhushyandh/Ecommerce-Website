@@ -1,3 +1,5 @@
+🔗 URL : https://vipstore-ecom.onrender.com/
+
 🛒 VIPcart – Full Stack MERN E-Commerce Platform
 
 VIPcart is a full-stack e-commerce web application built using the MERN stack (MongoDB, Express.js, React.js, Node.js).

@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 
-export default function Products({product}) {
+export default function Products({ product }) {
   return (
     <div className="product-item my-3">
       <div className="card p-3 rounded ui-card">
         <Link to={`/product/${product._id}`} className="card-media">
           <img
             className="card-img-top"
-            src={`${process.env.REACT_APP_API_URL}${product.images[0].image}`}
+            src={product.images?.[0]?.image}
             alt={product.name}
           />
+
         </Link>
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">

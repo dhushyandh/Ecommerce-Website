@@ -4,10 +4,10 @@ export default function Products({product}) {
   return (
     <div className="product-item my-3">
       <div className="card p-3 rounded ui-card">
-        <Link to={`${process.env.REACT_APP_API_URL}${product.images[0].image}`} className="card-media">
+        <Link to={`/product/${product._id}`} className="card-media">
           <img
             className="card-img-top"
-            src={product.images[0].image}
+            src={`${process.env.REACT_APP_API_URL}${product.images[0].image}`}
             alt={product.name}
           />
         </Link>

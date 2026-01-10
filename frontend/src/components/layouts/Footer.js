@@ -1,5 +1,4 @@
 import React from "react";
-import { Facebook, Twitter, Instagram, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -20,27 +19,10 @@ export default function Footer() {
         {/* Column 2 */}
         <div className="footer-col">
           <h4>Connect with Us</h4>
-          <ul className="footer-social-list">
-            <li>
-              <a href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-                <Facebook size={18} /> <span>Facebook</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-                <Twitter size={18} /> <span>Twitter</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.instagram.com/mr_d7x/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                <Instagram size={18} /> <span>Instagram</span>
-              </a>
-            </li>
-            <li>
-              <a href="/contact" aria-label="Email us">
-                <Mail size={18} /> <span>Contact</span>
-              </a>
-            </li>
+          <ul>
+            <li><a href="/">Facebook</a></li>
+            <li><a href="/">Twitter</a></li>
+            <li><a href="https://www.instagram.com/mr_d7x/">Instagram</a></li>
           </ul>
         </div>
 

@@ -6,14 +6,18 @@ export default function Products({ product }) {
     ? (rawImage.startsWith('http') ? rawImage : (rawImage.startsWith('/') ? rawImage : `/${rawImage}`))
     : null;
 
+  // fallback placeholder image when the product image is missing or fails to load
+  const fallbackImg = 'https://via.placeholder.com/400x300?text=No+Image';
+
   return (
     <div className="product-item my-3">
       <div className="card p-3 rounded ui-card">
         <Link to={`/product/${product._id}`} className="card-media">
           <img
             className="card-img-top"
-            src={imgSrc}
+            src={imgSrc || fallbackImg}
             alt={product.name}
+            onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = fallbackImg; }}
           />
 
         </Link>

@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
 
 export default function Products({ product }) {
+  const rawImage = product && product.images && product.images.length > 0 ? product.images[0].image : null;
+  const imgSrc = rawImage
+    ? (rawImage.startsWith('http') ? rawImage : (rawImage.startsWith('/') ? rawImage : `/${rawImage}`))
+    : null;
+
   return (
     <div className="product-item my-3">
       <div className="card p-3 rounded ui-card">
         <Link to={`/product/${product._id}`} className="card-media">
           <img
             className="card-img-top"
-            src={product.images[0].image.startsWith('http')
-              ? product.images[0].image
-              : `/${product.images[0].image}`}
+            src={imgSrc}
             alt={product.name}
           />
 

@@ -7,7 +7,9 @@ export default function Products({ product }) {
         <Link to={`/product/${product._id}`} className="card-media">
           <img
             className="card-img-top"
-            src={product.images?.[0]?.image}
+            src={product.images[0].image.startsWith('http')
+              ? product.images[0].image
+              : `/${product.images[0].image}`}
             alt={product.name}
           />
 

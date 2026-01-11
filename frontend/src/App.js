@@ -39,6 +39,7 @@ import UpdateOrder from './components/admin/UpdateOrder';
 import UserList from './components/admin/UserList';
 import UpdateUser from './components/admin/UpdateUser';
 import ReviewList from './components/admin/ReviewList';
+import BottomNav from './components/layouts/BottomNav';
 
 function App() {
 
@@ -65,6 +66,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/search/:keyword' element={<ProductSearch />} />
+              <Route path='/search' element={<ProductSearch />} />
               <Route path='/product/:id' element={<ProductDetail />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
@@ -95,6 +97,7 @@ function App() {
             <Route path='/admin/reviews' element={<ProtectedRoute isAdmin={true}><ReviewList /></ProtectedRoute>} />
           </Routes>
         </HelmetProvider>
+        <BottomNav />
         <Footer />
       </div>
     </Router>

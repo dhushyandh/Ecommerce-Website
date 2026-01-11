@@ -12,6 +12,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 
     let avatar;
 
+    // prefer explicit BACKEND_URL, otherwise derive from incoming request
     let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
 
     if (req.file) {
@@ -179,6 +180,7 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
     }
 
     let avatar;
+    // prefer explicit BACKEND_URL, otherwise derive from incoming request
     let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
     if (req.file) {
         avatar = `${BASE_URL}/uploads/user/${req.file.filename}`
@@ -234,12 +236,6 @@ exports.updateUserRole = catchAsyncError(async (req, res, next) => {
             return next(new ErrorHandler('Email is already in use by another account', 400));
         }
         newUserData.email = req.body.email;
-    }
-
-    let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
-    if (req.file) {
-        const avatarUrl = `${BASE_URL}/uploads/user/${req.file.filename}`;
-        newUserData = { ...newUserData, avatar: avatarUrl };
     }
 
     const user = await User.findByIdAndUpdate(req.params.id, newUserData, {

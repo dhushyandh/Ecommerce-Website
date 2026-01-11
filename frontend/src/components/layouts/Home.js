@@ -51,11 +51,10 @@ export default function Home() {
           <h1 id="products_heading">Latest Products</h1>
 
           <section id="products" className="container mt-5 ui-container">
-            <div className="products-grid ui-grid-row">
+            <div className="row">
               {products && products.map(product => (
                 <Products key={product._id} product={product} />
               ))}
-
             </div>
           </section>
           {productsCount > 0 && productsCount > resPerPage ?

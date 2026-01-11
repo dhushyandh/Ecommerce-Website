@@ -99,26 +99,26 @@ export default function ProductDetail() {
 
                     <div className="product-detail container">
                         <div className="product-gallery" id="product_image">
-                                <img
-                                    src={product?.images && product.images.length > 0 ? product.images[selectedImageIndex].image : '/images/default.png'}
-                                    alt={product?.name}
-                                    className="img-fluid"
-                                />
+                            <img
+                                src={product?.images && product.images.length > 0 ? product.images[selectedImageIndex].image : '/images/default.png'}
+                                alt={product?.name}
+                                className="img-fluid"
+                            />
 
-                                {product?.images && product.images.length > 1 ? (
-                                    <div className="thumbnails">
-                                        {product.images.map((img, i) => (
-                                            <img
-                                                key={img.image + i}
-                                                src={img.image}
-                                                alt={`${product?.name}-${i}`}
-                                                className={`thumb ${i === selectedImageIndex ? 'active' : ''}`}
-                                                onClick={() => setSelectedImageIndex(i)}
-                                            />
-                                        ))}
-                                    </div>
-                                ) : null}
-                            </div>
+                            {product?.images && product.images.length > 1 ? (
+                                <div className="thumbnails">
+                                    {product.images.map((img, i) => (
+                                        <img
+                                            key={img.image + i}
+                                            src={img.image}
+                                            alt={`${product?.name}-${i}`}
+                                            className={`thumb ${i === selectedImageIndex ? 'active' : ''}`}
+                                            onClick={() => setSelectedImageIndex(i)}
+                                        />
+                                    ))}
+                                </div>
+                            ) : null}
+                        </div>
 
                         <div className="product-info">
                             <div className="product-main">
@@ -168,32 +168,74 @@ export default function ProductDetail() {
                                 </div>
                             </div>
 
-                            <Modal show={show} onHide={handleClose}>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Submit Review</Modal.Title>
+                            <Modal
+                                show={show}
+                                onHide={handleClose}
+                                centered
+                                size="md"
+                                dialogClassName="review-modal"
+                            >
+                                <Modal.Header closeButton className="review-modal-header">
+                                    <Modal.Title>Write a Review</Modal.Title>
                                 </Modal.Header>
-                                <Modal.Body>
-                                    <ul className="stars">
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                            <li
-                                                key={star}
-                                                value={star}
-                                                onClick={() => setRating(star)}
-                                                className={`star ${star <= rating ? 'orange' : ''}`}
-                                                onMouseOver={(e) => e.target.classList.add('yellow')}
-                                                onMouseOut={(e) => e.target.classList.remove('yellow')}
-                                            >
-                                                <i className="fa fa-star" />
-                                            </li>
-                                        ))}
-                                    </ul>
 
-                                    <textarea onChange={(e) => setComment(e.target.value)} name="review" id="review" className="form-control mt-3" />
+                                <Modal.Body className="review-modal-body">
+
+                                    {/* Rating */}
+                                    <div className="rating-section">
+                                        <p className="rating-label">Your Rating</p>
+
+                                        <ul className="rating-stars">
+                                            {[1, 2, 3, 4, 5].map((star) => (
+                                                <li
+                                                    key={star}
+                                                    className={`star ${star <= rating ? 'active' : ''}`}
+                                                    onClick={() => setRating(star)}
+                                                >
+                                                    <i className="fa fa-star" />
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <span className="rating-text">
+                                            {["Poor", "Fair", "Good", "Very Good", "Excellent"][rating - 1]}
+                                        </span>
+                                    </div>
+
+                                    {/* Comment */}
+                                    <div className="comment-section">
+                                        <label>Your Review</label>
+                                        <textarea
+                                            rows="4"
+                                            maxLength="500"
+                                            placeholder="Share your experience with this product…"
+                                            className="form-control review-textarea"
+                                            value={comment}
+                                            onChange={(e) => setComment(e.target.value)}
+                                        />
+                                        <small className="char-count">{comment.length}/500</small>
+                                    </div>
+
                                 </Modal.Body>
-                                <div className="p-3 text-end">
-                                    <button aria-label="close" disabled={loading} onClick={reviewHandler} className="btn my-0 review-btn px-4 text-white">Submit</button>
-                                </div>
+
+                                <Modal.Footer className="review-modal-footer">
+                                    <button
+                                        className="btn btn-outline-secondary"
+                                        onClick={handleClose}
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        className="btn btn-primary submit-review-btn"
+                                        disabled={loading || comment.trim().length === 0}
+                                        onClick={reviewHandler}
+                                    >
+                                        Submit Review
+                                    </button>
+                                </Modal.Footer>
                             </Modal>
+
                         </div>
                     </div>
 

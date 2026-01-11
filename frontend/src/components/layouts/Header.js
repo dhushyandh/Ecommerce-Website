@@ -20,7 +20,7 @@ export default function Header() {
 
 
   return (
-    <nav className="navbar row ui-nav">
+    <nav className="navbar row ui-nav desktop-header">
       <div className="col-12 col-md-3">
         <div className="navbar-brand ui-brand">
           <Link to="/">

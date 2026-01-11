@@ -38,11 +38,12 @@ exports.getProducts = async (req, res, next) => {
 exports.newProduct = catchAsyncError(async (req, res, next) => {
 
     let images = [];
+    // prefer explicit BACKEND_URL, otherwise derive from incoming request
     let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
 
     if (req.files && req.files.length > 0) {
         req.files.forEach(file => {
-            let url = `${BASE_URL}/uploads/product/${file.filename}`;
+            const url = `${BASE_URL}/uploads/product/${file.filename}`;
             images.push({ image: url });
         })
     }
@@ -91,12 +92,12 @@ exports.updateProduct = async (req, res, next) => {
         if (req.body.imagesCleared === 'false') {
             images = product.images;
         }
-
+        // prefer explicit BACKEND_URL, otherwise derive from incoming request
         let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
 
         if (req.files && req.files.length > 0) {
             req.files.forEach(file => {
-                let url = `${BASE_URL}/uploads/product/${file.filename}`;
+                const url = `${BASE_URL}/uploads/product/${file.filename}`;
                 images.push({ image: url });
             })
         }

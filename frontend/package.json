@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.13.2",
     "countries-list": "^3.2.2",
+    "lucide-react": "^0.562.0",
     "mdbreact": "^5.2.0",
     "rc-slider": "^11.1.9",
     "rc-tooltip": "^6.4.0",

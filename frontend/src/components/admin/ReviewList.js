@@ -92,7 +92,7 @@ export default function ReviewList() {
             return;
         }
         if (isReviewDeleted) {
-            toast('User Deleted Successfully !', {
+            toast('Review Deleted Successfully !', {
                 type: 'success',
                 theme: 'light',
                 position: 'bottom-right',

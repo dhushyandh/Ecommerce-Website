@@ -2,23 +2,8 @@ const express = require('express');
 const { getProducts, newProduct, getSingleProduct, updateProduct, deleteProduct, createReview, getReviews, deleteReview, getAdminProducts } = require('../controllers/productController');
 const router = express.Router();
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/authenticate');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const upload = require("../middlewares/upload");
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function (req, file, cb) {
-            const dir = path.join(__dirname, '..', 'uploads', 'product');
-            try { fs.mkdirSync(dir, { recursive: true }); } catch (e) { }
-            cb(null, dir);
-        },
-        filename: function (req, file, cb) {
-            cb(null, file.originalname)
-        }
-    })
-})
 
 router.route('/products').get(getProducts);
 router.route('/product/:id')

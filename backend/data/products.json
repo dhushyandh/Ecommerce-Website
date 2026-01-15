@@ -64,7 +64,7 @@
     "name": "Dell Inspiron 3511 Laptop",
     "price": 440.57,
     "description": "Dell Inspiron 3511 11th Generation Intel Core i5-1135G7 Processor (8MB Cache, up to 4.2 GHz);Operating System: Windows 10 Home Single Language, English",
-    "ratings": 2,
+    "ratings": 0,
     "images": [
       {
         "image": "/images/products/3.jpg"
@@ -73,7 +73,7 @@
     "category": "Laptops",
     "seller": "Ebay",
     "stock": 9,
-    "numOfReviews": 12,
+    "numOfReviews": 0,
     "reviews": []
   },
   {

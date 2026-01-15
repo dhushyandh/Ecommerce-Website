@@ -24,7 +24,7 @@ export default function Footer() {
             <a href="/" aria-label="Twitter" className="social-link"><i className="fa fa-twitter" aria-hidden="true"></i></a>
             <a href="https://www.instagram.com/mr_d7x/" aria-label="Instagram" className="social-link"><i className="fa fa-instagram" aria-hidden="true"></i></a>
             <a href="/" aria-label="YouTube" className="social-link"><i className="fa fa-youtube" aria-hidden="true"></i></a>
-            <a href="/" aria-label="LinkedIn" className="social-link"><i className="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="/https://www.linkedin.com/in/dhushyandh-n-0446062a5/" aria-label="LinkedIn" className="social-link"><i className="fa fa-linkedin" aria-hidden="true"></i></a>
           </div>
         </div>
 

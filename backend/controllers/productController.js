@@ -247,8 +247,3 @@ exports.getAdminProducts = catchAsyncError(async (req, res, next) => {
         products
     })
 })
-const images = req.files.map(file => ({
-    image: file.path   // 🔥 Cloudinary URL
-}));
-
-req.body.images = images;

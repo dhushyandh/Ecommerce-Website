@@ -32,14 +32,11 @@ app.use("/api/v1", auth);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 
-// =======================
-// PRODUCTION (CRA build)
-// =======================
+
 if (process.env.NODE_ENV === "production") {
   // Serve static files from the React build
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  // Serve manifest/service-worker/index from build; use app.use fallback
   app.get('/manifest.json', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../frontend/build/manifest.json'));
   });
@@ -48,14 +45,12 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, '../frontend/build/service-worker.js'));
   });
 
-  // Fallback for client-side routing — use app.use so router param parsing isn't involved
   app.use((req, res) => {
     res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
   });
 
 }
 
-// Error middleware (LAST)
 app.use(errorMiddleware);
 
 module.exports = app;

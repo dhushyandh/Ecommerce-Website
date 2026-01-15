@@ -38,7 +38,6 @@ exports.getProducts = async (req, res, next) => {
 exports.newProduct = catchAsyncError(async (req, res, next) => {
 
     let images = [];
-    // prefer explicit BACKEND_URL, otherwise derive from incoming request
     let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
 
     if (req.files && req.files.length > 0) {
@@ -248,3 +247,8 @@ exports.getAdminProducts = catchAsyncError(async (req, res, next) => {
         products
     })
 })
+const images = req.files.map(file => ({
+    image: file.path   // 🔥 Cloudinary URL
+}));
+
+req.body.images = images;

@@ -5,6 +5,7 @@ const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/authenti
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const upload = require("../middlewares/upload");
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -35,5 +36,6 @@ router.route('/admin/products/:id').delete(isAuthenticatedUser, authorizeRoles('
 router.route('/admin/products/:id').put(isAuthenticatedUser, authorizeRoles('admin'), upload.array('images'), updateProduct);
 router.route('/admin/reviews').get(isAuthenticatedUser, authorizeRoles('admin'), getReviews)
 router.route('/admin/review').delete(isAuthenticatedUser, authorizeRoles('admin'), deleteReview)
+router.post("/products/new", isAuthenticatedUser, authorizeRoles("admin"), upload.array("images"), createProduct);
 
 module.exports = router;

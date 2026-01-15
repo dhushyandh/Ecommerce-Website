@@ -46,9 +46,9 @@ router.route('/update').put(isAuthenticatedUser, upload.single('avatar'), update
 
 router.route('/admin/users').get(isAuthenticatedUser, authorizeRoles('admin'), getAllUsers);
 router.route('/admin/user/:id')
-    .get(isAuthenticatedUser, authorizeRoles('admin'), getUser)
-    .put(isAuthenticatedUser, authorizeRoles('admin'), upload.single('avatar'), updateUserRole)
-    .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteUser);
-
-
+                              .get(isAuthenticatedUser, authorizeRoles('admin'), getUser)
+                              .put(isAuthenticatedUser, authorizeRoles('admin'), upload.single('avatar'), updateUserRole)
+                              .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteUser);
+                            
+                            
 module.exports = router;

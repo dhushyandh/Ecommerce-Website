@@ -12,7 +12,6 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 
     let avatar;
 
-    // prefer explicit BACKEND_URL, otherwise derive from incoming request
     let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
 
     if (req.file) {
@@ -180,7 +179,6 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
     }
 
     let avatar;
-    // prefer explicit BACKEND_URL, otherwise derive from incoming request
     let BASE_URL = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
     if (req.file) {
         avatar = `${BASE_URL}/uploads/user/${req.file.filename}`

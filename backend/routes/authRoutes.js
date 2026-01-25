@@ -28,7 +28,13 @@ router.get(
       ),
     });
 
-    res.redirect("http://localhost:3000/oauth-success");
+    const redirectUrl =
+      process.env.NODE_ENV === "production"
+        ? process.env.FRONTEND_URL + "/oauth-success"
+        : "http://localhost:3000/oauth-success";
+
+    res.redirect(redirectUrl);
+
   }
 );
 

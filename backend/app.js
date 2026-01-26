@@ -3,12 +3,13 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const dotenv = require("dotenv");
+const passport = require("passport");
+
 
 
 // Load env variables
 dotenv.config({ path: path.join(__dirname, "config/config.env") });
 
-const passport = require("passport");
 require("./config/passport");
 
 // Models
@@ -27,6 +28,7 @@ const authRoutes = require("./routes/authRoutes");
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 // Uploads (images)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -37,7 +39,6 @@ app.use("/api/v1", auth);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 app.use("/api/auth", authRoutes);
-app.use(passport.initialize());
 
 
 if (process.env.NODE_ENV === "production") {

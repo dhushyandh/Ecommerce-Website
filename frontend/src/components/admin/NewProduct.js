@@ -17,199 +17,195 @@ export default function NewProduct() {
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
 
-    const { loading, isProductCreated = false, error } = useSelector(state => state.productState);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { loading, isProductCreated, error } = useSelector(
+        state => state.productState
+    );
 
     const categories = [
-        'Electronics',
-        'Mobile Phones',
-        'Laptops',
-        'Accessories',
-        'headphones',
-        'Food',
-        'Books',
-        'Clothes/Shoes',
-        'Beauty/Health',
-        'Sports',
-        'Outdoor',
-        'Home'
+        "Electronics",
+        "Mobile Phones",
+        "Laptops",
+        "Accessories",
+        "Sports",
+        "Home",
+        "Clothing",
+        "Footwear",
+        "Headphones"
     ];
-
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (isProductCreated) {
-            toast('Product Created Successfully !', {
-                type: 'success',
-                theme: 'dark',
-                position: 'bottom-right',
+            toast("Product Created Successfully!", {
+                type: "success",
+                theme: "dark",
+                position: "bottom-right",
                 onOpen: () => dispatch(clearProductCreated())
-            })
-            navigate('/admin/products');
-            return;
+            });
+            navigate("/admin/products");
         }
+
         if (error) {
             toast(error, {
-                position: "bottom-right",
-                type: 'error',
+                type: "error",
                 theme: "light",
-                onOpen: () => { dispatch(clearError()) }
-            })
-            return;
+                position: "bottom-right",
+                onOpen: () => dispatch(clearError())
+            });
         }
-    }, [dispatch, isProductCreated, error, navigate])
+    }, [dispatch, isProductCreated, error, navigate]);
 
     const onImagesChange = (e) => {
         const files = Array.from(e.target.files);
 
-        files.forEach(file => {
+        setImages([]);
+        setImagesPreview([]);
 
+        files.forEach(file => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    setImagesPreview(oldArray => [...oldArray, reader.result]);
-                    setImages(oldArray => [...oldArray, file]);
-
+                    setImagesPreview(old => [...old, reader.result]);
+                    setImages(old => [...old, file]);
                 }
-            }
+            };
             reader.readAsDataURL(file);
-        })
-    }
-
-
+        });
+    };
 
     const submitHandler = (e) => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.set("name", name);
-        formData.set("price", price);
-        formData.set("stock", stock);
-        formData.set("description", description);
-        formData.set("seller", seller);
-        formData.set("category", category);
-        images.forEach(image => {
-            formData.append("images", image)
-        })
-        dispatch(createNewProduct(formData));
-    }
+        formData.append("name", name);
+        formData.append("price", price);
+        formData.append("description", description);
+        formData.append("category", category);
+        formData.append("seller", seller);
+        formData.append("stock", stock);
 
+        images.forEach(image => {
+            formData.append("images", image);
+        });
+
+        dispatch(createNewProduct(formData));
+    };
 
     return (
         <div className="row">
             <div className="col-12 col-md-2">
                 <Sidebar />
             </div>
+
             <div className="col-12 col-md-10">
                 <Fragment>
                     <div className="wrapper my-5">
-                        <form onSubmit={submitHandler} className="shadow-lg" encType='multipart/form-data'>
+                        <form
+                            onSubmit={submitHandler}
+                            className="shadow-lg"
+                            encType="multipart/form-data"
+                        >
                             <h1 className="mb-4">New Product</h1>
 
                             <div className="form-group">
-                                <label htmlFor="name_field">Name</label>
+                                <label>Name</label>
                                 <input
                                     type="text"
-                                    id="name_field"
                                     className="form-control"
-                                    onChange={e => setName(e.target.value)}
                                     value={name}
+                                    onChange={e => setName(e.target.value)}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="price_field">Price</label>
+                                <label>Price</label>
                                 <input
-                                    type="text"
-                                    id="price_field"
-                                    onChange={e => setPrice(e.target.value)}
+                                    type="number"
+                                    className="form-control"
                                     value={price}
+                                    onChange={e => setPrice(e.target.value)}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="description_field">Description</label>
+                                <label>Description</label>
                                 <textarea
                                     className="form-control"
-                                    id="description_field"
-                                    rows="8"
+                                    rows="6"
+                                    value={description}
                                     onChange={e => setDescription(e.target.value)}
-                                    value={description}></textarea>
+                                />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="category_field">Category</label>
-                                <select className="form-control" id="category_field" value={category} onChange={e => setCategory(e.target.value)}  >
+                                <label>Category</label>
+                                <select
+                                    className="form-control"
+                                    value={category}
+                                    onChange={e => setCategory(e.target.value)}
+                                >
                                     <option value="">Select</option>
-                                    {categories.map(category => (
-                                        <option key={category} value={category}>{category}</option>
+                                    {categories.map(cat => (
+                                        <option key={cat} value={cat}>
+                                            {cat}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
+
                             <div className="form-group">
-                                <label htmlFor="stock_field">Stock</label>
+                                <label>Stock</label>
                                 <input
                                     type="number"
-                                    id="stock_field"
                                     className="form-control"
-                                    onChange={e => setStock(e.target.value)}
                                     value={stock}
+                                    onChange={e => setStock(e.target.value)}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="seller_field">Seller Name</label>
+                                <label>Seller</label>
                                 <input
                                     type="text"
-                                    id="seller_field"
                                     className="form-control"
-                                    onChange={e => setSeller(e.target.value)}
                                     value={seller}
+                                    onChange={e => setSeller(e.target.value)}
                                 />
                             </div>
 
-                            <div className='form-group'>
+                            <div className="form-group">
                                 <label>Images</label>
-
-                                <div className='custom-file'>
-                                    <input
-                                        type='file'
-                                        name='product_images'
-                                        className='custom-file-input'
-                                        id='customFile'
-                                        multiple
-                                        onChange={onImagesChange}
-                                    />
-                                    <label className='custom-file-label' htmlFor='customFile'>
-                                        Choose Images
-                                    </label>
-                                </div>
-                                {imagesPreview.map(image => (
+                                <input
+                                    type="file"
+                                    className="form-control"
+                                    multiple
+                                    onChange={onImagesChange}
+                                />
+                                {imagesPreview.map(img => (
                                     <img
-                                        className="mt-3 mr-2"
-                                        key={image}
-                                        src={image}
-                                        alt={"Image Preview"}
-                                        width="55px"
-                                        height="52px" />
+                                        key={img}
+                                        src={img}
+                                        alt="preview"
+                                        width="55"
+                                        height="52"
+                                        className="mt-2 mr-2"
+                                    />
                                 ))}
                             </div>
 
-
                             <button
-                                id="login_button"
                                 type="submit"
                                 className="btn btn-block py-3"
                                 disabled={loading}
                             >
                                 CREATE
                             </button>
-
                         </form>
                     </div>
                 </Fragment>
             </div>
         </div>
-
-    )
+    );
 }

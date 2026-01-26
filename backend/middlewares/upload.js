@@ -1,15 +1,18 @@
 const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('../config/cloudinary');
+const path = require('path');
+const fs = require('fs');
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'vipcart/products',   // ✅ Cloudinary folder
-    allowed_formats: ['jpg', 'jpeg', 'png', 'webp']
-  }
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      const dir = path.join(__dirname, '..', 'uploads', 'products');
+      fs.mkdirSync(dir, { recursive: true });
+      cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname);
+    }
+  })
 });
-
-const upload = multer({ storage });
 
 module.exports = upload;

@@ -81,15 +81,26 @@ export const getAdminProducts = () => async (dispatch) => {
 }
 export const createNewProduct = (productData) => async (dispatch) => {
     try {
-        dispatch(newProductRequest())
-        const { data } = await axios.post(`/api/v1/admin/products/new`, productData);
+        dispatch(newProductRequest());
+
+        const { data } = await axios.post(
+            "/api/v1/admin/product/new",
+            productData,
+            {
+                withCredentials: true,
+                headers: { "Content-Type": "multipart/form-data" }
+            }
+        );
 
         dispatch(newProductSuccess(data));
     } catch (error) {
-        dispatch(newProductFail(error.response?.data?.message || error.message));
-
+        dispatch(
+            newProductFail(error.response?.data?.message || error.message)
+        );
     }
-}
+};
+
+
 export const deleteProduct = (id) => async (dispatch) => {
     try {
         dispatch(deleteProductRequest())

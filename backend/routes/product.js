@@ -26,13 +26,15 @@ router.put('/review', isAuthenticatedUser, createReview);
 // Admin
 router.get('/admin/products', isAuthenticatedUser, authorizeRoles('admin'), getAdminProducts);
 
+
 router.post(
-    '/admin/products/new',
-    isAuthenticatedUser,
-    authorizeRoles('admin'),
-    upload.array('images'),
-    newProduct
+  '/admin/product/new',
+  isAuthenticatedUser,
+  authorizeRoles('admin'),
+  upload.array('images', 5),
+  newProduct
 );
+
 
 router.put(
     '/admin/products/:id',

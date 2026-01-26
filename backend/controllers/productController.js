@@ -35,26 +35,47 @@ exports.getProducts = async (req, res, next) => {
     });
 };
 
-/* ===============================
-   CREATE NEW PRODUCT (Cloudinary)
-================================ */
+const cloudinary = require("../config/cloudinary");
 exports.newProduct = catchAsyncError(async (req, res, next) => {
 
-    // ✅ Cloudinary images
-    const images = req.files.map(file => ({
-        image: file.path    // Cloudinary URL
-    }));
+    if (!req.user) {
+        return next(new ErrorHandler("User not authenticated", 401));
+    }
 
-    req.body.images = images;
-    req.body.user = req.user.id;
+    if (!req.files || req.files.length === 0) {
+        return next(new ErrorHandler("Please upload images", 400));
+    }
 
-    const product = await Product.create(req.body);
+    const images = [];
+
+    for (const file of req.files) {
+        const result = await cloudinary.uploader.upload(file.path, {
+            folder: "products"
+        });
+
+        images.push({ image: result.secure_url });
+        fs.unlinkSync(file.path);
+    }
+
+    const product = await Product.create({
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        category: req.body.category,
+        seller: req.body.seller,
+        stock: req.body.stock,
+        images,
+        user: req.user._id
+    });
 
     res.status(201).json({
         success: true,
         product
     });
 });
+
+
+
 
 /* ===============================
    GET SINGLE PRODUCT

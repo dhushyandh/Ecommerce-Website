@@ -12,7 +12,7 @@
         "image": "/images/products/2.jpg"
       }
     ],
-    "category": "Electronics",
+    "category": "Headphones",
     "seller": "TechStore",
     "stock": 50,
     "numOfReviews": 120,
@@ -28,7 +28,7 @@
   {
     "name": "OPPO F21s Pro 5G",
     "price": 245.67,
-    "description": "OPPO F21s Pro 5G is a powerful device with a RAM extension feature, that offers brilliant operational speed to users.",
+    "description": "OPPO F21s Pro 5G is a powerful device with a RAM extension feature.",
     "ratings": 5,
     "images": [
       {
@@ -45,9 +45,9 @@
     "reviews": []
   },
   {
-    "name": "WRISTIO HD, Bluetooth Calling Smart Watch",
+    "name": "WRISTIO HD Bluetooth Smart Watch",
     "price": 150.32,
-    "description": "Minix watches are exclusively designed to fulfill the advanced tech needs of today’s generation.",
+    "description": "Smart watch designed for advanced tech needs.",
     "ratings": 2,
     "images": [
       {
@@ -63,7 +63,7 @@
   {
     "name": "Dell Inspiron 3511 Laptop",
     "price": 440.57,
-    "description": "Dell Inspiron 3511 11th Generation Intel Core i5-1135G7 Processor (8MB Cache, up to 4.2 GHz);Operating System: Windows 10 Home Single Language, English",
+    "description": "11th Gen Intel Core i5 laptop with Windows 10.",
     "ratings": 0,
     "images": [
       {
@@ -79,7 +79,7 @@
   {
     "name": "Lenovo IdeaPad Slim 3 Laptop",
     "price": 250.45,
-    "description": "Lenovo IdeaPad Slim 311th Gen Intel Core i5-1135G7 | Speed: 2.4 GHz (Base) - 4.2 GHz (Max) | 4 Cores | 8 Threads | 8 MB Cache",
+    "description": "Intel Core i5 laptop with slim design.",
     "ratings": 4,
     "images": [
       {
@@ -95,7 +95,7 @@
   {
     "name": "ASUS VivoBook 15 Laptop",
     "price": 767.32,
-    "description": "ASUS VivoBook 15 15.6-inch (39.62 cm) HD, Dual Core Intel Celeron N4020, Thin and Light Laptop (4GB RAM/256GB SSD/Integrated Graphics/Windows 11 Home/Transparent Silver/1.8 Kg), X515MA-BR011W",
+    "description": "Thin and light laptop with Windows 11.",
     "ratings": 5,
     "images": [
       {
@@ -109,32 +109,32 @@
     "reviews": []
   },
   {
-    "name": "PTron Newly Launched Tangent Sports, 60Hrs Playtime",
+    "name": "PTron Tangent Sports Headphones",
     "price": 15.46,
-    "description": "Gigantic 60 + Hours of music playtime on a single charge; BT5.2 Wireless headphones with ENC (Environmental Noise Cancellation) Technology to enhance your voice quality over the voice calls",
+    "description": "60+ hours playtime with ENC noise cancellation.",
     "ratings": 5,
     "images": [
       {
         "image": "/images/products/4.jpg"
       }
     ],
-    "category": "headphones",
+    "category": "Headphones",
     "seller": "Amazon",
     "stock": 4,
     "numOfReviews": 20,
     "reviews": []
   },
   {
-    "name": "Campus Men's Maxico Running Shoes",
+    "name": "Campus Men's Running Shoes",
     "price": 10.12,
-    "description": "The high raised back cover with extra padding.",
+    "description": "Running shoes with extra padding.",
     "ratings": 3,
     "images": [
       {
         "image": "/images/products/5.jpg"
       }
     ],
-    "category": "Sports",
+    "category": "Footwear",
     "seller": "Ebay",
     "stock": 6,
     "numOfReviews": 9,
@@ -143,8 +143,8 @@
   {
     "name": "Gaming Laptop",
     "price": 1299.99,
-    "description": "Powerful gaming laptop with the latest GPU.",
-    "ratings":5,
+    "description": "High-performance gaming laptop.",
+    "ratings": 5,
     "images": [
       {
         "image": "/images/products/3.jpg"
@@ -160,8 +160,7 @@
         "rating": 4,
         "comment": "Great performance but a bit heavy."
       }
-    ],
-    "createdAt": "2025-12-19T00:00:00.000Z"
+    ]
   },
   {
     "name": "Smartphone",
@@ -177,19 +176,12 @@
     "seller": "PhoneHub",
     "stock": 100,
     "numOfReviews": 200,
-    "reviews": [
-      {
-        "name": "Alice Brown",
-        "rating": 5,
-        "comment": "Amazing camera quality!"
-      }
-    ],
-    "createdAt": "2025-12-19T00:00:00.000Z"
+    "reviews": []
   },
   {
     "name": "Fitness Tracker",
     "price": 49.99,
-    "description": "Track your fitness goals with this smart tracker.",
+    "description": "Track fitness goals easily.",
     "ratings": 3,
     "images": [
       {
@@ -200,19 +192,12 @@
     "seller": "FitLife",
     "stock": 75,
     "numOfReviews": 60,
-    "reviews": [
-      {
-        "name": "Chris Green",
-        "rating": 4,
-        "comment": "Good features but battery life could be better."
-      }
-    ],
-    "createdAt": "2025-12-19T00:00:00.000Z"
+    "reviews": []
   },
   {
     "name": "Cookware Set",
     "price": 89.99,
-    "description": "Non-stick cookware set for all your cooking needs.",
+    "description": "Durable non-stick cookware set.",
     "ratings": 3,
     "images": [
       {
@@ -223,19 +208,12 @@
     "seller": "KitchenPro",
     "stock": 30,
     "numOfReviews": 40,
-    "reviews": [
-      {
-        "name": "Emma White",
-        "rating": 5,
-        "comment": "Durable and easy to clean!"
-      }
-    ],
-    "createdAt": "2025-12-19T00:00:00.000Z"
+    "reviews": []
   },
   {
-    "name": "Bluetooth Speaker TEST",
+    "name": "Bluetooth Speaker",
     "price": 59.99,
-    "description": "Portable Bluetooth speaker with excellent sound quality.",
+    "description": "Portable Bluetooth speaker with rich sound.",
     "ratings": 4,
     "images": [
       {
@@ -246,13 +224,223 @@
     "seller": "SoundWave",
     "stock": 40,
     "numOfReviews": 25,
-    "reviews": [
+    "reviews": []
+  },
+  {
+    "name": "Men Hoodie",
+    "price": 39.99,
+    "description": "Premium cotton hoodie.",
+    "ratings": 4.6,
+    "images": [
       {
-        "name": "Michael Scott",
-        "rating": 5,
-        "comment": "Great sound and battery life!"
+        "image": "/images/products/hoodie.webp"
       }
     ],
-    "createdAt": "2025-12-19T00:00:00.000Z"
+    "category": "Clothing",
+    "seller": "UrbanWear",
+    "stock": 60,
+    "numOfReviews": 32,
+    "reviews": []
+  },
+  {
+    "name": "Wireless Earbuds",
+    "price": 59.99,
+    "description": "Compact wireless earbuds with deep bass.",
+    "ratings": 4.5,
+    "images": [
+      {
+        "image": "/images/products/earbuds.webp"
+      },
+      {
+        "image": "/images/products/earbuds1.webp"
+      },
+      {
+        "image": "/images/products/earbuds2.webp"
+      }
+    ],
+    "category": "Headphones",
+    "seller": "SoundWave",
+    "stock": 40,
+    "numOfReviews": 25,
+    "reviews": []
+  },
+  {
+    "name": "Bluetooth Headphones",
+    "price": 89.99,
+    "description": "Over-ear Bluetooth headphones with long battery life.",
+    "ratings": 4.3,
+    "images": [
+      {
+        "image": "/images/products/headphone.webp"
+      },
+      {
+        "image": "/images/products/headphone1.webp"
+      },
+      {
+        "image": "/images/products/headphone2.webp"
+      }
+    ],
+    "category": "Headphones",
+    "seller": "SoundWave",
+    "stock": 30,
+    "numOfReviews": 18,
+    "reviews": []
+  },
+  {
+    "name": "Men Hoodie",
+    "price": 39.99,
+    "description": "Premium cotton hoodie with modern fit.",
+    "ratings": 4.6,
+    "images": [
+      {
+        "image": "/images/products/hoodie.webp"
+      },
+      {
+        "image": "/images/products/hoodie1.webp"
+      },
+      {
+        "image": "/images/products/hoodie2.webp"
+      },
+      {
+        "image": "/images/products/hoodie3.webp"
+      }
+    ],
+    "category": "Clothing",
+    "seller": "UrbanWear",
+    "stock": 60,
+    "numOfReviews": 32,
+    "reviews": []
+  },
+  {
+    "name": "iPhone Pro",
+    "price": 999.99,
+    "description": "Latest iPhone with advanced camera and performance.",
+    "ratings": 4.8,
+    "images": [
+      {
+        "image": "/images/products/iphone-product.webp"
+      },
+      {
+        "image": "/images/products/iphone-product1.webp"
+      },
+      {
+        "image": "/images/products/iphone-product2.webp"
+      }
+    ],
+    "category": "Mobile Phones",
+    "seller": "AppleStore",
+    "stock": 20,
+    "numOfReviews": 55,
+    "reviews": []
+  },
+  {
+    "name": "OPPO F21s",
+    "price": 299.99,
+    "description": "Stylish OPPO smartphone with smooth performance.",
+    "ratings": 4.4,
+    "images": [
+      {
+        "image": "/images/products/oppos21.webp"
+      }
+    ],
+    "category": "Mobile Phones",
+    "seller": "OPPO Store",
+    "stock": 35,
+    "numOfReviews": 18,
+    "reviews": []
+  },
+  {
+    "name": "Casual Shirt",
+    "price": 29.99,
+    "description": "Stylish casual shirt for everyday wear.",
+    "ratings": 4.4,
+    "images": [
+      {
+        "image": "/images/products/shirt.webp"
+      },
+      {
+        "image": "/images/products/shirt1.webp"
+      },
+      {
+        "image": "/images/products/shirt2.webp"
+      }
+    ],
+    "category": "Clothing",
+    "seller": "UrbanWear",
+    "stock": 70,
+    "numOfReviews": 21,
+    "reviews": []
+  },
+  {
+    "name": "Running Shoes",
+    "price": 79.99,
+    "description": "Lightweight running shoes with excellent grip.",
+    "ratings": 4.7,
+    "images": [
+      {
+        "image": "/images/products/shoe1.webp"
+      },
+      {
+        "image": "/images/products/shoe2.webp"
+      },
+      {
+        "image": "/images/products/shoe3.webp"
+      }
+    ],
+    "category": "Footwear",
+    "seller": "FastFeet",
+    "stock": 45,
+    "numOfReviews": 28,
+    "reviews": []
+  },
+  {
+    "name": "Printed T-Shirt",
+    "price": 19.99,
+    "description": "Soft cotton t-shirt with premium print.",
+    "ratings": 4.5,
+    "images": [
+      {
+        "image": "/images/products/tshirt.webp"
+      },
+      {
+        "image": "/images/products/tshirt1.webp"
+      },
+      {
+        "image": "/images/products/tshirt2.webp"
+      },
+      {
+        "image": "/images/products/tshirt3.webp"
+      },
+      {
+        "image": "/images/products/tshirt4.webp"
+      },
+      {
+        "image": "/images/products/tshirt5.webp"
+      }
+    ],
+    "category": "Clothing",
+    "seller": "UrbanWear",
+    "stock": 100,
+    "numOfReviews": 40,
+    "reviews": []
+  },
+  {
+    "name": "Smart LED TV",
+    "price": 499.99,
+    "description": "Smart LED TV with vibrant display and sound.",
+    "ratings": 4.6,
+    "images": [
+      {
+        "image": "/images/products/tv.webp"
+      },
+      {
+        "image": "/images/products/tv1.webp"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "VisionTech",
+    "stock": 15,
+    "numOfReviews": 22,
+    "reviews": []
   }
 ]

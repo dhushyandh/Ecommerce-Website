@@ -49,9 +49,11 @@ export default function Login() {
             return;
         }
     }, [error, isAuthenticated, loading, navigate, dispatch])
-    const googleLoginHandler = () => {
-        window.location.href = "http://localhost:8000/api/auth/google";
+    const googleLogin = () => {
+        window.location.href =
+            "https://vipstore-ecom.onrender.com/api/auth/google";
     };
+
 
 
     return (
@@ -97,7 +99,7 @@ export default function Login() {
                         <Link to={'/register'} className="float-right mt-3">New User?</Link>
                         <button
                             type="button"
-                            onClick={googleLoginHandler}
+                            onClick={googleLogin}
                             className="btn btn-light btn-block py-3 mt-3 d-flex align-items-center justify-content-center gap-2"
                             style={{
                                 border: "1px solid #ddd",

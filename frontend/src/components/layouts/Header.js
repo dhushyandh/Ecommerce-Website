@@ -25,7 +25,7 @@ export default function Header() {
       <div className="col-12 col-md-3">
         <div className="navbar-brand ui-brand">
           <Link to="/">
-            <img alt="JVL cart logo" src="/images/logo.png" className="ui-logo" />
+            <img alt="VipStore logo" src="/images/logo.png" className="ui-logo" />
           </Link>
         </div>
       </div>

@@ -4,6 +4,26 @@ const ErrorHandler = require('../utils/errorHandler');
 const sendToken = require('../utils/jwt');
 const sendEmail = require('../utils/email');
 const crypto = require('crypto');
+const cloudinary = require('../config/cloudinary');
+
+const uploadAvatarToCloudinary = (file) => {
+    if (!file) return Promise.resolve(null);
+
+    return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+            {
+                folder: 'user',
+                resource_type: 'image'
+            },
+            (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+            }
+        );
+
+        uploadStream.end(file.buffer);
+    });
+};
 
 // RegisterUser -- {{base_url}}/api/v1/register
 exports.registerUser = catchAsyncError(async (req, res, next) => {
@@ -12,12 +32,9 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 
     let avatar;
 
-    let BASE_URL = (process.env.NODE_ENV === 'production' && process.env.BACKEND_URL)
-        ? process.env.BACKEND_URL
-        : `${req.protocol}://${req.get('host')}`;
-
     if (req.file) {
-        avatar = `${BASE_URL}/uploads/user/${req.file.filename}`
+        const uploaded = await uploadAvatarToCloudinary(req.file);
+        avatar = uploaded?.secure_url;
     }
 
     const user = await User.create({
@@ -181,12 +198,11 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
     }
 
     let avatar;
-    let BASE_URL = (process.env.NODE_ENV === 'production' && process.env.BACKEND_URL)
-        ? process.env.BACKEND_URL
-        : `${req.protocol}://${req.get('host')}`;
     if (req.file) {
-        avatar = `${BASE_URL}/uploads/user/${req.file.filename}`
-        newUserData = { ...newUserData, avatar }
+        const uploaded = await uploadAvatarToCloudinary(req.file);
+        if (uploaded?.secure_url) {
+            newUserData = { ...newUserData, avatar: uploaded.secure_url };
+        }
     }
 
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {

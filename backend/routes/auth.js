@@ -1,20 +1,8 @@
 const express = require('express');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function (req, file, cb) {
-            const dir = path.join(__dirname, '..', 'uploads', 'user');
-            try { fs.mkdirSync(dir, { recursive: true }); } catch (e) { }
-            cb(null, dir);
-        },
-        filename: function (req, file, cb) {
-            cb(null, Date.now() + '-' + file.originalname)
-        }
-    })
-})
+// Store uploads in memory; controllers will upload to Cloudinary.
+const upload = multer({ storage: multer.memoryStorage() });
 
 const { registerUser,
     loginUser,

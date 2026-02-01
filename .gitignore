@@ -23,5 +23,11 @@ yarn-error.log*
 # build
 /build
 
+# React build output
+frontend/build/
+
+# Uploaded files (runtime artifacts)
+backend/uploads/
+
 # OS
 .DS_Store

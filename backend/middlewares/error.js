@@ -38,5 +38,3 @@ module.exports = (err, req, res, next) => {
         ...(process.env.NODE_ENV === "development" && { stack: err.stack })
     });
 };
-
-module.exports = ErrorHandler;

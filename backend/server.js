@@ -18,7 +18,7 @@ const startServer = async () => {
     await connectDatabase();
 
     const server = app.listen(process.env.PORT, () => {
-      console.log(`Server running on port ${process.env.PORT}`);
+      console.log(`Server running on http://localhost:${process.env.PORT}`);
     });
 
     // Handle unhandled promise rejections

@@ -50,8 +50,16 @@ export default function Login() {
         }
     }, [error, isAuthenticated, loading, navigate, dispatch])
     const googleLogin = () => {
-        window.location.href =
-            "https://vipstore-ecom.onrender.com/api/auth/google";
+        const envBase = process.env.REACT_APP_BACKEND_URL;
+        const normalizedEnvBase = envBase ? envBase.replace(/\/$/, "") : "";
+        const inferredBase =
+            window.location.hostname === "localhost" && window.location.port === "3000"
+                ? "http://localhost:8000"
+                : window.location.origin;
+
+        const base = normalizedEnvBase || inferredBase;
+        const redirect = encodeURIComponent(window.location.origin);
+        window.location.href = `${base}/api/auth/google?redirect=${redirect}`;
     };
 
 

@@ -7,8 +7,11 @@ const passport = require("passport");
 
 
 
-// Load env variables
+
 dotenv.config({ path: path.join(__dirname, "config/config.env") });
+
+
+app.set('trust proxy', 1);
 
 require("./config/passport");
 

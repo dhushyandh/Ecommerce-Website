@@ -94,21 +94,38 @@ exports.logoutUser = catchAsyncError(async (req, res, next) => {
 
 // ForgetPassword -- {{base_url}}/api/v1/password/forget
 exports.forgetPassword = catchAsyncError(async (req, res, next) => {
-    const user = await User.findOne({ email: req.body.email });
+    const requestedEmail = (req.body.email || '').trim().toLowerCase();
+    if (!requestedEmail) {
+        return next(new ErrorHandler('Please provide an email address', 400));
+    }
+
+    const user = await User.findOne({ email: requestedEmail });
 
     if (!user) {
-        return next(new ErrorHandler("User not found with this email", 404));
+
+        const hideEnumeration = String(process.env.HIDE_FORGOT_PASSWORD_USER_ENUMERATION || '').toLowerCase() === 'true';
+        if (hideEnumeration) {
+            return res.status(200).json({
+                success: true,
+                message: 'If the email exists, a password reset link has been sent.',
+            });
+        }
+        return next(new ErrorHandler('User not found with this email', 404));
     }
 
     //Get ResetPassword Token
     const resetToken = user.getResetToken();
     await user.save({ validateBeforeSave: false });
 
-    let BASE_URL = process.env.FRONTEND_URL;
+    const getRequestProtocol = () => {
+        const forwardedProto = req.get('x-forwarded-proto');
+        if (forwardedProto) return forwardedProto.split(',')[0].trim();
+        return req.protocol;
+    };
 
-    if (process.env.NODE_ENV === 'production') {
-        BASE_URL = `${req.protocol}://${req.get('host')}`
-    }
+
+    const BASE_URL = process.env.FRONTEND_URL
+        || `${getRequestProtocol()}://${req.get('host')}`;
 
     // Create reset url
     const resetUrl = `${BASE_URL}/password/reset/${resetToken}`;
@@ -124,7 +141,7 @@ exports.forgetPassword = catchAsyncError(async (req, res, next) => {
         })
         res.status(200).json({
             success: true,
-            message: `Email sent to ${user.email} successfully !`
+            message: 'Reset password link has been sent to your email.'
         })
     }
     catch (error) {
@@ -152,15 +169,28 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler("Password reset token is invalid or has expired", 400));
     }
 
+    const password = (req.body.password || '').toString();
+    const confirmPassword = (req.body.confirmPassword || '').toString();
+
+    if (!password || !confirmPassword) {
+        return next(new ErrorHandler('Please enter password and confirm password', 400));
+    }
+
     if (req.body.password !== req.body.confirmPassword) {
         return next(new ErrorHandler("Passwords do not match", 400));
     }
 
-    user.password = req.body.password;
+
+    if (password.length > 8) {
+        return next(new ErrorHandler('Password cannot exceed 8 characters', 400));
+    }
+
+    user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordTokenExpire = undefined;
 
-    await user.save({ validateBeforeSave: false });
+    // Do not bypass validation: prevents empty password being saved.
+    await user.save();
 
     sendToken(user, 201, res);
 });

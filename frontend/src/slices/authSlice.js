@@ -9,6 +9,8 @@ const authSlice = createSlice({
         user: null,
         error: null,
         isUpdated: false,
+        isForgotEmailSent: false,
+        isPasswordReset: false,
         message: null
     },
     reducers: {
@@ -95,29 +97,46 @@ const authSlice = createSlice({
 
         forgetPasswordRequest(state) {
             state.loading = true;
+            state.error = null;
             state.message = null;
+            state.isForgotEmailSent = false;
         },
         forgetPasswordSuccess(state, action) {
             state.loading = false;
+            state.isForgotEmailSent = true;
             state.message = action.payload.message;
         },
         forgetPasswordFail(state, action) {
             state.loading = false;
             state.error = action.payload;
+            state.isForgotEmailSent = false;
         },
 
         resetPasswordRequest(state) {
             state.loading = true;
             state.isUpdated = false;
+            state.isPasswordReset = false;
+            state.error = null;
         },
         resetPasswordSuccess(state, action) {
             state.loading = false;
             state.isAuthenticated = true;
             state.user = action.payload.user;
+            state.isPasswordReset = true;
         },
         resetPasswordFail(state, action) {
             state.loading = false;
             state.error = action.payload;
+            state.isPasswordReset = false;
+        },
+
+        clearPasswordReset(state) {
+            state.isPasswordReset = false;
+        },
+
+        clearForgotEmailSent(state) {
+            state.isForgotEmailSent = false;
+            state.message = null;
         },
 
         clearError(state) {
@@ -151,6 +170,8 @@ export const {
     resetPasswordRequest,
     resetPasswordSuccess,
     resetPasswordFail,
+    clearPasswordReset,
+    clearForgotEmailSent,
     clearError
 } = authSlice.actions;
 

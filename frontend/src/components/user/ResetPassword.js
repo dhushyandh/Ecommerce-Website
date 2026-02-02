@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { clearAuthError, resetPassword } from "../../actions/userActions";
+import { resetPassword } from "../../actions/userActions";
+import { clearError, clearPasswordReset } from "../../slices/authSlice";
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 
@@ -9,13 +10,38 @@ export default function ResetPassword() {
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [hasSubmitted, setHasSubmitted] = useState(false);
     const dispatch = useDispatch();
-    const { isAuthenticated, error } = useSelector(state => state.authState);
+    const { isPasswordReset, error } = useSelector(state => state.authState);
     const navigate = useNavigate();
     const { token } = useParams();
 
+    useEffect(() => {
+        dispatch(clearPasswordReset());
+        dispatch(clearError());
+    }, [dispatch]);
+    
     const submitHandler = (e) => {
         e.preventDefault();
+
+        if (!password || !confirmPassword) {
+            toast('Please enter password and confirm password', {
+                type: 'error',
+                position: 'bottom-right',
+                theme: 'light',
+            });
+            return;
+        }
+        if (password !== confirmPassword) {
+            toast('Passwords do not match', {
+                type: 'error',
+                position: 'bottom-right',
+                theme: 'light',
+            });
+            return;
+        }
+
+        setHasSubmitted(true);
 
         dispatch(resetPassword(token, {
             password,
@@ -25,12 +51,13 @@ export default function ResetPassword() {
     }
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (hasSubmitted && isPasswordReset) {
             toast('Password Reset Successfully !', {
                 type: 'success',
                 position: 'bottom-right',
                 theme: 'light',
             })
+            dispatch(clearPasswordReset());
             navigate('/')
             return;
         }
@@ -39,11 +66,12 @@ export default function ResetPassword() {
                 position: "bottom-right",
                 type: 'error',
                 theme: 'light',
-                onOpen: () => { dispatch(clearAuthError()) }
+                onOpen: () => { dispatch(clearError()) }
             })
+            setHasSubmitted(false);
             return;
         }
-    }, [isAuthenticated, error, navigate, dispatch])
+    }, [hasSubmitted, isPasswordReset, error, navigate, dispatch])
 
     return (
         <div className="row wrapper">

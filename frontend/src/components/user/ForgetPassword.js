@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { clearAuthError, forgetPassword as forgetPasswordAction } from "../../actions/userActions";
+import { clearForgotEmailSent } from "../../slices/authSlice";
 import { toast } from "react-toastify";
 
 export default function ForgetPassword() {
 
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
-    const {  error, message } = useSelector(state => state.authState)
+    const { error, message, isForgotEmailSent } = useSelector(state => state.authState)
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -18,13 +19,14 @@ export default function ForgetPassword() {
     }
 
     useEffect(() => {
-        if (message) {
-            toast(message, {
+        if (isForgotEmailSent) {
+            toast(message || 'Reset password link sent. Please check your email.', {
                 type: 'success',
                 position: 'bottom-right',
                 theme: 'light',
             })
             setEmail("");
+            dispatch(clearForgotEmailSent());
             return;
         }
         if (error) {
@@ -36,7 +38,7 @@ export default function ForgetPassword() {
             })
             return;
         }
-    },[message,error,dispatch])
+    }, [isForgotEmailSent, message, error, dispatch])
 
     return (
         <div className="row wrapper">

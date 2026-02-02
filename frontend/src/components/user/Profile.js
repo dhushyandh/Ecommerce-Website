@@ -1,9 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../layouts/Loader';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../actions/userActions';
 
 export default function Profile() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { user = {}, loading } =
     useSelector(state => state.authState || {});
@@ -98,13 +101,11 @@ export default function Profile() {
                 >
                   Admin Dashboard
                 </Link>
-                <Link>
-                  {isAuthenticated && (
-                    <button type="button" className="btn btn-danger btn-block" onClick={logoutHandler}>
-                      Logout
-                    </button>
-                  )}
-                </Link>
+                {isAuthenticated && (
+                  <button type="button" className="btn btn-danger btn-block" onClick={logoutHandler}>
+                    Logout
+                  </button>
+                )}
               </>
             )}
 

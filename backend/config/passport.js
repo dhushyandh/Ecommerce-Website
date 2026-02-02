@@ -24,8 +24,11 @@ passport.use(
           user = await User.create({
             name: profile.displayName,
             email: profile.emails[0].value,
-            avatar: profile.photos && profile.photos[0] ? profile.photos[0].value : undefined,            // userModel.password has maxlength 8
             password: oauthPassword,
+            avatar: {
+              public_id: "google-oauth",
+              url: profile.photos?.[0]?.value || "",
+            },
           });
         }
 

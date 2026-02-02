@@ -9,6 +9,7 @@ import {
     loginFail,
     loginRequest,
     loginSuccess,
+    logOutFail,
     logOutSuccess,
     registerFail,
     registerRequest,

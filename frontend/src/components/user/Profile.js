@@ -16,9 +16,7 @@ export default function Profile() {
 
   const { user = {}, loading, isUpdated, error } =
     useSelector(state => state.authState || {});
-    const { isAuthenticated} = useSelector(state => state.authState || {});
-
-  if (loading) return <Loader />;
+  const { isAuthenticated } = useSelector(state => state.authState || {});
 
   useEffect(() => {
     if (isUpdated) {
@@ -30,6 +28,8 @@ export default function Profile() {
       dispatch(clearError());
     }
   }, [isUpdated, error, dispatch]);
+
+  if (loading) return <Loader />;
 
   const logoutHandler = async () => {
     await dispatch(logout());

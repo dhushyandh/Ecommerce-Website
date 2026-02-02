@@ -23,10 +23,6 @@ import Cart from './components/cart/Cart';
 import Shipping from './components/cart/Shipping';
 import ConfirmOrder from './components/cart/ConfirmOrder';
 import Payment from './components/cart/Payment';
-import axios from 'axios';
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js';
-import Loader from './components/layouts/Loader';
 import OrderSuccess from './components/cart/OrderSuccess';
 import UserOrders from './components/order/UserOrders';
 import OrderDetial from './components/order/OrderDetail';
@@ -41,19 +37,16 @@ import UpdateUser from './components/admin/UpdateUser';
 import ReviewList from './components/admin/ReviewList';
 import BottomNav from './components/layouts/BottomNav';
 import OAuthSuccess from "./components/user/OAuthSuccess";
+import NotFound from './components/layouts/NotFound';
+import About from './components/layouts/About';
+import StripeCheckoutSuccess from './components/cart/StripeCheckoutSuccess';
+import StripeCheckoutCancel from './components/cart/StripeCheckoutCancel';
 
 function App() {
-
-  const [stripeApiKey, setStripeApiKey] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadUser());
-    async function getStripeApiKey() {
-      const { data } = await axios.get('/api/v1/stripeapi')
-      setStripeApiKey(data.stripeApiKey)
-    }
-    getStripeApiKey()
   }, [dispatch]);
 
 
@@ -62,10 +55,11 @@ function App() {
       <div className="App">
         <HelmetProvider>
           <Header />
-          <div className='container container-fluid'>
+          <div className='container-fluid vip-container'>
             <ToastContainer />
             <Routes>
               <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path='/about' element={<About />} />
               <Route path='/search/:keyword' element={<ProductSearch />} />
               <Route path='/search' element={<ProductSearch />} />
               <Route path='/product/:id' element={<ProductDetail />} />
@@ -82,22 +76,25 @@ function App() {
               <Route path='/order/success' element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
               <Route path='/orders' element={<ProtectedRoute><UserOrders /></ProtectedRoute>} />
               <Route path='/order/:id' element={<ProtectedRoute><OrderDetial /></ProtectedRoute>} />
-              <Route path="/payment" element={<ProtectedRoute> {stripeApiKey ? (<Elements stripe={loadStripe(stripeApiKey)}><Payment /></Elements>) : (<Loader />)}</ProtectedRoute>} />
+              <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+              <Route path="/payment/success" element={<ProtectedRoute><StripeCheckoutSuccess /></ProtectedRoute>} />
+              <Route path="/payment/cancel" element={<ProtectedRoute><StripeCheckoutCancel /></ProtectedRoute>} />
               <Route path="/oauth-success" element={<OAuthSuccess />} />
+
+              {/* Admin Routes */}
+              <Route path="/admin/dashboard" element={<ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>} />
+              <Route path="/admin/products" element={<ProtectedRoute isAdmin={true}><ProductList /></ProtectedRoute>} />
+              <Route path="/admin/products/create" element={<ProtectedRoute isAdmin={true}><NewProduct /></ProtectedRoute>} />
+              <Route path='/admin/products/:id' element={<ProtectedRoute isAdmin={true}><UpdateProduct /></ProtectedRoute>} />
+              <Route path='/admin/orders/' element={<ProtectedRoute isAdmin={true}><OrderList /></ProtectedRoute>} />
+              <Route path='/admin/order/:id' element={<ProtectedRoute isAdmin={true}><UpdateOrder /></ProtectedRoute>} />
+              <Route path='/admin/users/' element={<ProtectedRoute isAdmin={true}><UserList /></ProtectedRoute>} />
+              <Route path='/admin/user/:id' element={<ProtectedRoute isAdmin={true}><UpdateUser /></ProtectedRoute>} />
+              <Route path='/admin/reviews' element={<ProtectedRoute isAdmin={true}><ReviewList /></ProtectedRoute>} />
+
+              <Route path='*' element={<NotFound />} />
             </Routes>
           </div>
-          {/* Admin Routes */}
-          <Routes>
-            <Route path="/admin/dashboard" element={<ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>} />
-            <Route path="/admin/products" element={<ProtectedRoute isAdmin={true}><ProductList /></ProtectedRoute>} />
-            <Route path="/admin/products/create" element={<ProtectedRoute isAdmin={true}><NewProduct /></ProtectedRoute>} />
-            <Route path='/admin/products/:id' element={<ProtectedRoute isAdmin={true}><UpdateProduct /></ProtectedRoute>} />
-            <Route path='/admin/orders/' element={<ProtectedRoute isAdmin={true}><OrderList /></ProtectedRoute>} />
-            <Route path='/admin/order/:id' element={<ProtectedRoute isAdmin={true}><UpdateOrder /></ProtectedRoute>} />
-            <Route path='/admin/users/' element={<ProtectedRoute isAdmin={true}><UserList /></ProtectedRoute>} />
-            <Route path='/admin/user/:id' element={<ProtectedRoute isAdmin={true}><UpdateUser /></ProtectedRoute>} />
-            <Route path='/admin/reviews' element={<ProtectedRoute isAdmin={true}><ReviewList /></ProtectedRoute>} />
-          </Routes>
         </HelmetProvider>
         <BottomNav />
         <Footer />

@@ -1,35 +1,117 @@
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../layouts/Loader';
 import { Link, useNavigate } from 'react-router-dom';
-import { logout } from '../../actions/userActions';
+import { logout, updateProfile } from '../../actions/userActions';
+import { clearError, clearUpdateProfile } from '../../slices/authSlice';
+import { toast } from 'react-toastify';
 
 export default function Profile() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user = {}, loading } =
+  const fileInputRef = useRef(null);
+  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+
+  const { user = {}, loading, isUpdated, error } =
     useSelector(state => state.authState || {});
     const { isAuthenticated} = useSelector(state => state.authState || {});
 
   if (loading) return <Loader />;
+
+  useEffect(() => {
+    if (isUpdated) {
+      toast('Profile photo updated', { type: 'success', position: 'bottom-right', theme: 'light' });
+      dispatch(clearUpdateProfile());
+    }
+    if (error) {
+      toast(error, { type: 'error', position: 'bottom-right', theme: 'light' });
+      dispatch(clearError());
+    }
+  }, [isUpdated, error, dispatch]);
+
   const logoutHandler = async () => {
     await dispatch(logout());
     navigate('/login');
   };
 
+  const editAvatar = () => {
+    setShowAvatarMenu(false);
+    fileInputRef.current?.click();
+  };
+
+  const onAvatarFileChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('avatar', file);
+    dispatch(updateProfile(formData));
+
+
+    e.target.value = '';
+  };
+
+  const deleteAvatar = () => {
+    setShowAvatarMenu(false);
+    dispatch(updateProfile({ removeAvatar: true }));
+  };
+
+  const avatarSrc = user?.avatar || "/images/default_avatar.png";
+
   return (
     <>
-      {/* ================= DESKTOP PROFILE (UNCHANGED) ================= */}
       <div className="desktop-profile row justify-content-around mt-5 user-info">
         <div className="col-12 col-md-3 text-center">
-          <figure className='avatar avatar-profile mx-auto'>
-            <img
-              className="rounded-circle img-fluid"
-              src={user?.avatar || "/images/default_avatar.png"}
-              alt={user?.name}
+          <div style={{ position: 'relative', display: 'inline-block' }}>
+            <figure className='avatar avatar-profile mx-auto' style={{ cursor: 'pointer' }}>
+              <img
+                className="rounded-circle img-fluid"
+                src={avatarSrc}
+                alt={user?.name}
+                onClick={() => setShowAvatarMenu(v => !v)}
+              />
+            </figure>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={onAvatarFileChange}
+              style={{ display: 'none' }}
             />
-          </figure>
+
+            {showAvatarMenu && (
+              <div
+                className="shadow"
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#fff',
+                  borderRadius: 8,
+                  padding: 8,
+                  minWidth: 180,
+                  zIndex: 10,
+                  border: '1px solid #e5e5e5',
+                }}
+              >
+                <button type="button" className="btn btn-light btn-block" onClick={editAvatar}>
+                  Edit profile image
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-block mt-2"
+                  onClick={deleteAvatar}
+                  disabled={!user?.avatar}
+                >
+                  Delete profile image
+                </button>
+              </div>
+            )}
+          </div>
 
           <Link
             to="/myprofile/update"
@@ -66,11 +148,45 @@ export default function Profile() {
       {/* ================= MOBILE PROFILE (NO SCROLL) ================= */}
       <div className="mobile-profile">
         <div className="profile-card">
-          <img
-            src={user?.avatar || "/images/default_avatar.png"}
-            alt={user?.name}
-            className="profile-avatar"
-          />
+          <div style={{ position: 'relative' }}>
+            <img
+              src={avatarSrc}
+              alt={user?.name}
+              className="profile-avatar"
+              style={{ cursor: 'pointer' }}
+              onClick={() => setShowAvatarMenu(v => !v)}
+            />
+
+            {showAvatarMenu && (
+              <div
+                className="shadow"
+                style={{
+                  position: 'absolute',
+                  top: '105%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#fff',
+                  borderRadius: 8,
+                  padding: 8,
+                  minWidth: 220,
+                  zIndex: 10,
+                  border: '1px solid #e5e5e5',
+                }}
+              >
+                <button type="button" className="btn btn-light btn-block" onClick={editAvatar}>
+                  Edit profile image
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-block mt-2"
+                  onClick={deleteAvatar}
+                  disabled={!user?.avatar}
+                >
+                  Delete profile image
+                </button>
+              </div>
+            )}
+          </div>
 
           <h3 className="profile-name">{user.name}</h3>
           <p className="profile-email">{user.email}</p>

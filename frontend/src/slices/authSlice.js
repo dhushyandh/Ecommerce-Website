@@ -71,7 +71,7 @@ const authSlice = createSlice({
         },
         updateProfileSuccess(state, action) {
             state.loading = false;
-            state.user = action.payload;
+            state.user = action.payload?.user || action.payload;
             state.isUpdated = true;
         },
         updateProfileFail(state, action) {

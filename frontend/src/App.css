@@ -43,11 +43,9 @@ body {
   border-radius: 8px
 }
 
-/* Layout container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem
+/* Layout container (do NOT override Bootstrap `.container`) */
+.vip-container {
+  padding: 1rem;
 }
 
 /* Typography helpers */
@@ -95,6 +93,137 @@ body {
   box-shadow: 0 6px 18px rgba(2, 6, 23, 0.45)
 }
 
+/* ===================== ABOUT PAGE ===================== */
+.about-page {
+  padding: 1rem 0 2rem;
+}
+
+.about-hero {
+  background: radial-gradient(1200px 300px at 20% 0%, rgba(250, 156, 35, 0.14), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.55));
+  border: 1px solid rgba(16, 24, 40, 0.06);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: var(--card-shadow);
+}
+
+.about-title {
+  font-weight: 900;
+  letter-spacing: .3px;
+  margin-bottom: .35rem;
+}
+
+.about-subtitle {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-highlight {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(16, 24, 40, 0.06);
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+.about-section {
+  margin-top: 1.75rem;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.section-title {
+  font-weight: 900;
+  margin-bottom: .5rem;
+}
+
+.section-underline {
+  width: 180px;
+  height: 4px;
+  margin: 0 auto;
+  background: rgba(250, 156, 35, 0.55);
+  border-radius: 999px;
+}
+
+.team-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.team-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(16, 24, 40, 0.06);
+  border-radius: 14px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--card-shadow);
+}
+
+.team-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 9999px; /* rounded-full */
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 28px rgba(16, 24, 40, 0.12);
+  filter: grayscale(100%);
+  background: #f3f4f6;
+  margin-bottom: .75rem;
+}
+
+.team-name {
+  font-weight: 800;
+  color: #0b66ff;
+  font-size: 1.15rem;
+  margin-bottom: .25rem;
+  text-transform: lowercase;
+}
+
+.team-role {
+  font-weight: 700;
+  color: #111827;
+  text-transform: lowercase;
+}
+
+.contact-card {
+  max-width: 680px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(16, 24, 40, 0.06);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+@media (max-width: 992px) {
+  .about-highlights {
+    grid-template-columns: 1fr;
+  }
+  .team-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .team-row {
+    grid-template-columns: 1fr;
+  }
+  .team-avatar {
+    width: 120px;
+    height: 120px;
+  }
+}
+
 .ui-brand {
   display: flex;
   align-items: center;
@@ -110,6 +239,10 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0;
+}
+
+.ui-search-area form {
+  width: 100%;
 }
 
 
@@ -144,7 +277,7 @@ body {
 
 .ui-search-area .input-group {
   width: 100%;
-  max-width: 620px;
+  max-width: 20%;
   height: 44px;
   /* FIX */
   margin: 0 auto;
@@ -155,7 +288,7 @@ body {
 
 #search_field {
   height: 44px;
-  /* SAME AS CONTAINER */
+ 
   line-height: 44px;
   border-radius: 999px;
   padding-left: 46px;
@@ -366,9 +499,9 @@ body {
   height: 80px !important; /* visually larger than nav */
   max-height: 80px !important;
   width: auto !important;
-  margin-top: -8px !important; /* allow logo to overflow nav without increasing nav height */
+  margin-left: 16px !important; /* nudge logo slightly right */
+  margin-top: -12px !important; /* allow logo to overflow nav without increasing nav height */
   display: block !important;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.18) !important;
   border-radius: 6px !important;
   transition: transform .22s ease !important;
 }
@@ -378,6 +511,7 @@ body {
   .ui-brand img {
     height: 44px !important;
     max-height: 44px !important;
+    margin-left: 0 !important;
     margin-top: 0 !important;
     transform: none !important;
   }

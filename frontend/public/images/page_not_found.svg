@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" rx="24" fill="#F6F7FB"/>
+  <path d="M120 370C170 310 240 280 320 280H520C600 280 670 310 720 370" stroke="#D6DAE6" stroke-width="10" stroke-linecap="round"/>
+  <path d="M170 340C210 290 260 260 320 260H520C580 260 630 290 670 340" stroke="#E4E7F0" stroke-width="10" stroke-linecap="round"/>
+
+  <g opacity="0.9">
+    <rect x="170" y="110" width="460" height="280" rx="18" fill="#FFFFFF" stroke="#DADFF0" stroke-width="6"/>
+    <rect x="210" y="155" width="380" height="22" rx="11" fill="#EEF1FA"/>
+    <rect x="210" y="195" width="250" height="22" rx="11" fill="#EEF1FA"/>
+    <rect x="210" y="235" width="310" height="22" rx="11" fill="#EEF1FA"/>
+    <circle cx="260" cy="305" r="18" fill="#EEF1FA"/>
+    <rect x="290" y="293" width="220" height="24" rx="12" fill="#EEF1FA"/>
+  </g>
+
+  <text x="400" y="120" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="700" fill="#2D2F3A">404</text>
+  <text x="400" y="150" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#6A6F83">We can’t find that page</text>
+
+  <g>
+    <circle cx="110" cy="120" r="10" fill="#DADFF0"/>
+    <circle cx="690" cy="90" r="8" fill="#DADFF0"/>
+    <circle cx="710" cy="150" r="6" fill="#E4E7F0"/>
+    <circle cx="140" cy="70" r="6" fill="#E4E7F0"/>
+  </g>
+</svg>

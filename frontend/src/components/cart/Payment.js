@@ -1,19 +1,13 @@
-import { useElements, useStripe } from "@stripe/react-stripe-js"
-import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validateShipping } from "./Shipping";
 import { toast } from "react-toastify";
-import { orderCompleted } from "../../slices/cartSlice";
 import axios from 'axios';
-import { createOrder } from "../../actions/orderActions";
 import { clearError as clearOrderError } from "../../slices/orderSlice";
 
 export default function Payment() {
 
-    const stripe = useStripe();
-    const elements = useElements();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const orderInfoRaw = sessionStorage.getItem('orderInfo');
@@ -22,31 +16,9 @@ export default function Payment() {
     const { items: cartItems, shippingInfo } = useSelector(state => state.cartState);
     const { error: orderError } = useSelector(state => state.orderState);
 
+    const [isRedirecting, setIsRedirecting] = useState(false);
 
-    const paymentData = orderInfo ? {
-        amount: Math.round(orderInfo.totalPrice * 100),
-        shipping: {
-            name: user.name,
-            address: {
-                city: shippingInfo.city,
-                postal_code: shippingInfo.postalCode,
-                country: shippingInfo.country,
-                state: shippingInfo.state,
-                line1: shippingInfo.address
-            },
-            phone: shippingInfo.phoneNo
-        }
-    } : { amount: 0, shipping: {} };
-    const order = {
-        orderItems: cartItems,
-        shippingInfo
-    }
-    if (orderInfo) {
-        order.itemsPrice = orderInfo.itemsPrice;
-        order.shippingPrice = orderInfo.shippingPrice;
-        order.taxPrice = orderInfo.taxPrice;
-        order.totalPrice = orderInfo.totalPrice;
-    }
+
     useEffect(() => {
         if (shippingInfo && Object.keys(shippingInfo).length > 0) {
             validateShipping(shippingInfo, navigate);
@@ -69,58 +41,37 @@ export default function Payment() {
     }, [navigate]);
 
 
-
     const submitHandler = async (e) => {
         e.preventDefault();
-        if (!stripe || !elements) return;
-        const payBtn = document.querySelector('#pay_btn');
-        if (payBtn) payBtn.disabled = true;
+        if (!orderInfo) {
+            toast.error('Order info missing. Please confirm your order again.', { position: 'bottom-right' });
+            navigate('/order/confirm');
+            return;
+        }
+        if (!cartItems || cartItems.length === 0) {
+            toast.error('Your cart is empty.', { position: 'bottom-right' });
+            navigate('/cart');
+            return;
+        }
 
         try {
-            const { data } = await axios.post('/api/v1/payment/process', paymentData);
-            const clientSecret = data?.client_secret;
-            if (!clientSecret) {
-                toast.error('Payment initialization failed', { position: 'bottom-right' });
-                if (payBtn) payBtn.disabled = false;
-                return;
-            }
-
-            const result = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: elements.getElement(CardNumberElement),
-                    billing_details: {
-                        name: user?.name,
-                        email: user?.email
-                    }
-                }
+            setIsRedirecting(true);
+            const { data } = await axios.post('/api/v1/payment/checkout-session', {
+                cartItems: cartItems.map((i) => ({ product: i.product, quantity: i.quantity })),
+                shippingInfo,
+                user: { name: user?.name, email: user?.email }
             });
 
-            if (result.error) {
-                toast.error(result.error.message || 'Payment failed', { position: 'bottom-right' });
-                if (payBtn) payBtn.disabled = false;
+            if (!data?.url) {
+                toast.error('Unable to start Stripe Checkout. Please try again.', { position: 'bottom-right' });
+                setIsRedirecting(false);
                 return;
             }
 
-            if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-                toast.success('Payment Success 🎉', { position: "bottom-right" });
-
-                order.paymentInfo = {
-                    id: result.paymentIntent.id,
-                    status: result.paymentIntent.status,
-                }
-
-                dispatch(orderCompleted());
-                dispatch(createOrder(order));
-                navigate('/order/success');
-                return;
-            }
-
-            toast.warn('Payment could not be completed, please try again', { position: 'bottom-right' });
-            if (payBtn) payBtn.disabled = false;
+            window.location.href = data.url;
         } catch (error) {
             toast.error(error?.response?.data?.message || error.message || 'Payment error', { position: 'bottom-right' });
-            const payBtn = document.querySelector('#pay_btn');
-            if (payBtn) payBtn.disabled = false;
+            setIsRedirecting(false);
         }
     }
 
@@ -128,41 +79,16 @@ export default function Payment() {
         <div className="row wrapper">
             <div className="col-10 col-lg-5">
                 <form onSubmit={submitHandler} className="shadow-lg">
-                    <h1 className="mb-4">Card Info</h1>
-                    <div className="form-group">
-                        <label htmlFor="card_num_field">Card Number</label>
-                        <CardNumberElement
-                            type="text"
-                            id="card_num_field"
-                            className="form-control"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="card_exp_field">Card Expiry</label>
-                        <CardExpiryElement
-                            type="text"
-                            id="card_exp_field"
-                            className="form-control"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="card_cvc_field">Card CVC</label>
-                        <CardCvcElement
-                            type="text"
-                            id="card_cvc_field"
-                            className="form-control"
-                        />
-                    </div>
-
+                    <h1 className="mb-4">Payment</h1>
+                    <p className="mb-4">You will be redirected to Stripe Checkout to complete payment securely.</p>
 
                     <button
                         id="pay_btn"
                         type="submit"
                         className="btn btn-block py-3"
+                        disabled={isRedirecting}
                     >
-                        Pay - ₹{`${orderInfo && orderInfo.totalPrice}`}
+                        {isRedirecting ? 'Redirecting…' : `Pay with Stripe - ₹${orderInfo && orderInfo.totalPrice}`}
                     </button>
 
                 </form>

@@ -22,19 +22,19 @@ export default function Header() {
 
   return (
     <nav className="navbar row ui-nav desktop-header">
-      <div className="col-12 col-md-3">
+      <div className="col-12 col-md-2">
         <div className="navbar-brand ui-brand">
           <Link to="/">
-            <img alt="VipStore logo" src="/images/logo.png" className="ui-logo" />
+            <img alt="VIPStore logo" src="/images/vipstore-logo.svg" className="ui-logo" />
           </Link>
         </div>
       </div>
 
-      <div className="col-12 col-md-8 mt-2 mt-md-0 ui-search-area">
+      <div className="col-12 col-md-7 col-lg-4 mt-2 mt-md-0 ui-search-area">
         <Search />
       </div>
 
-      <div className="col-12 col-md-2 mt-4 mt-md-0 text-center ui-user-area">
+      <div className="col-12 col-md-3 col-lg-2 mt-4 mt-md-0 text-center ui-user-area">
         {isAuthenticated ?
           (
             <Dropdown className="d-inline">

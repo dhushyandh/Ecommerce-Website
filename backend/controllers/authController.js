@@ -224,7 +224,11 @@ exports.changePassword = catchAsyncError(async (req, res, next) => {
 // Update Profile -- {{base_url}}/api/v1/profile/update
 exports.updateProfile = catchAsyncError(async (req, res, next) => {
     if (req.file) console.log('[authController.updateProfile] file=', req.file.originalname);
-    let newUserData = { name: req.body.name };
+    let newUserData = {};
+
+    if (typeof req.body.name === 'string' && req.body.name.trim()) {
+        newUserData.name = req.body.name.trim();
+    }
 
     if (req.body.email) {
         const existing = await User.findOne({ email: req.body.email });
@@ -233,6 +237,11 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
             return next(new ErrorHandler('Email is already in use by another account', 400));
         }
         newUserData.email = req.body.email;
+    }
+
+    const removeAvatar = String(req.body.removeAvatar || '').toLowerCase() === 'true';
+    if (removeAvatar) {
+        newUserData.avatar = null;
     }
 
     let avatar;

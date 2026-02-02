@@ -56,6 +56,15 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, '../frontend/build/service-worker.js'));
   });
 
+  // If someone hits an unknown API URL, return JSON 404 (not the React app)
+  app.use('/api', (req, res) => {
+    res.status(404).json({
+      success: false,
+      message: 'API route not found',
+    });
+  });
+
+  // Otherwise serve React (it will show the NotFound route)
   app.use((req, res) => {
     res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
   });

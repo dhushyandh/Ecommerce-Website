@@ -8,20 +8,28 @@ const cloudinary = require('../config/cloudinary');
 
 const uploadAvatarToCloudinary = (file) => {
     if (!file) return Promise.resolve(null);
+    if (!file.buffer) {
+        return Promise.reject(new Error('Avatar file buffer missing'));
+    }
 
     return new Promise((resolve, reject) => {
-        const uploadStream = cloudinary.uploader.upload_stream(
-            {
-                folder: 'user',
-                resource_type: 'image'
-            },
-            (error, result) => {
-                if (error) return reject(error);
-                resolve(result);
-            }
-        );
+        try {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                {
+                    folder: 'user',
+                    resource_type: 'image'
+                },
+                (error, result) => {
+                    if (error) return reject(error);
+                    resolve(result);
+                }
+            );
 
-        uploadStream.end(file.buffer);
+            uploadStream.on('error', reject);
+            uploadStream.end(file.buffer);
+        } catch (error) {
+            reject(error);
+        }
     });
 };
 
@@ -185,7 +193,7 @@ exports.changePassword = catchAsyncError(async (req, res, next) => {
 
 // Update Profile -- {{base_url}}/api/v1/profile/update
 exports.updateProfile = catchAsyncError(async (req, res, next) => {
-    if (req.file) console.log('[authController.updateProfile] file=', req.file.filename);
+    if (req.file) console.log('[authController.updateProfile] file=', req.file.originalname);
     let newUserData = { name: req.body.name };
 
     if (req.body.email) {
@@ -199,9 +207,13 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
 
     let avatar;
     if (req.file) {
-        const uploaded = await uploadAvatarToCloudinary(req.file);
-        if (uploaded?.secure_url) {
-            newUserData = { ...newUserData, avatar: uploaded.secure_url };
+        try {
+            const uploaded = await uploadAvatarToCloudinary(req.file);
+            if (uploaded?.secure_url) {
+                newUserData = { ...newUserData, avatar: uploaded.secure_url };
+            }
+        } catch (error) {
+            return next(new ErrorHandler(error.message || 'Avatar upload failed', 502));
         }
     }
 
@@ -244,7 +256,7 @@ exports.getUser = catchAsyncError(async (req, res, next) => {
 exports.updateUserRole = catchAsyncError(async (req, res, next) => {
     console.log('[authController.updateUserRole] req.user.id=', req.user && req.user.id, 'req.params.id=', req.params.id);
     console.log('[authController.updateUserRole] body=', req.body);
-    if (req.file) console.log('[authController.updateUserRole] file=', req.file.filename);
+    if (req.file) console.log('[authController.updateUserRole] file=', req.file.originalname);
     const newUserData = { name: req.body.name, role: req.body.role };
 
     // If email provided, ensure it's not already used by another user
@@ -254,6 +266,18 @@ exports.updateUserRole = catchAsyncError(async (req, res, next) => {
             return next(new ErrorHandler('Email is already in use by another account', 400));
         }
         newUserData.email = req.body.email;
+    }
+
+    // Optional avatar update for admin
+    if (req.file) {
+        try {
+            const uploaded = await uploadAvatarToCloudinary(req.file);
+            if (uploaded?.secure_url) {
+                newUserData.avatar = uploaded.secure_url;
+            }
+        } catch (error) {
+            return next(new ErrorHandler(error.message || 'Avatar upload failed', 502));
+        }
     }
 
     const user = await User.findByIdAndUpdate(req.params.id, newUserData, {

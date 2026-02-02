@@ -1,13 +1,19 @@
 import { useSelector } from 'react-redux';
 import Loader from '../layouts/Loader';
 import { Link } from 'react-router-dom';
+import { logout } from '../../actions/userActions';
 
 export default function Profile() {
 
   const { user = {}, loading } =
     useSelector(state => state.authState || {});
+    const { isAuthenticated} = useSelector(state => state.authState || {});
 
   if (loading) return <Loader />;
+  const logoutHandler = async () => {
+    await dispatch(logout());
+    navigate('/login');
+  };
 
   return (
     <>
@@ -85,12 +91,21 @@ export default function Profile() {
               Change Password
             </Link>
             {user?.role === "admin" && (
-              <Link
-                to="/admin/dashboard"
-                className="btn btn-dark"
-              >
-                Admin Dashboard
-              </Link>
+              <>
+                <Link
+                  to="/admin/dashboard"
+                  className="btn btn-dark"
+                >
+                  Admin Dashboard
+                </Link>
+                <Link>
+                  {isAuthenticated && (
+                    <button type="button" className="btn btn-danger btn-block" onClick={logoutHandler}>
+                      Logout
+                    </button>
+                  )}
+                </Link>
+              </>
             )}
 
           </div>

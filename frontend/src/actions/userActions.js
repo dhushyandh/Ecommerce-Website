@@ -97,17 +97,13 @@ export const loadUser = () => async (dispatch) => {
         );
     }
 }
-export const logout = async (dispatch) => {
+export const logout = () => async (dispatch) => {
     try {
-
-        await axios.get(`/api/v1/logout`);
+        await axios.get(`/api/v1/logout`, { withCredentials: true });
         dispatch(logOutSuccess());
     }
     catch (error) {
-        dispatch(
-            loginFail()
-        )
-
+        dispatch(logOutFail(error.response?.data?.message || error.message));
     }
 }
 export const updateProfile = (userData) => async (dispatch) => {

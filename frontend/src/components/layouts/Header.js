@@ -15,7 +15,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutHandler = () => {
-    dispatch(logout);
+    dispatch(logout());
     navigate('/login');
   }
 

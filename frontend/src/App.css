@@ -3107,6 +3107,34 @@ ul.CTAs a {
     font-weight: 800;
   }
 }
+
+.mobile-bottom-nav .mobile-nav-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.mobile-bottom-nav .mobile-nav-logout {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: 20%;
+  text-decoration: none;
+  color: #666;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.mobile-bottom-nav .mobile-nav-logout span {
+  font-size: 22px;
+  line-height: 1;
+}
 /* =====================================================
    AMAZON MOBILE HEADER – FINAL CLEAN OVERRIDE
    ONLY MOBILE | DESKTOP UNTOUCHED

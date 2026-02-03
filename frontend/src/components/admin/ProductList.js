@@ -68,7 +68,12 @@ export default function ProductList() {
     }
 
     const deleteHandler = (e, id) => {
-        e.target.disabled = true;
+        if (!window.confirm('Delete this product? This action cannot be undone.')) {
+            return;
+        }
+
+        const btn = e.currentTarget;
+        if (btn) btn.disabled = true;
         dispatch(deleteProduct(id));
     }
 

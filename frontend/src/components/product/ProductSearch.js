@@ -39,6 +39,11 @@ export default function ProductSearch() {
   const { keyword } = useParams();
   const isMobile = window.innerWidth <= 768;
 
+  const normalizedKeyword = typeof keyword === "string" ? keyword.trim() : "";
+  const hasPriceFilter =
+    Array.isArray(priceChanged) && (priceChanged[0] !== 1 || priceChanged[1] !== 1000);
+  const hasActiveSearch = Boolean(normalizedKeyword || category || rating || hasPriceFilter);
+
 
   const isEmptySearch =
     (!keyword || keyword.trim() === "") &&
@@ -242,9 +247,17 @@ export default function ProductSearch() {
                   {/* PRODUCTS GRID */}
                   <div className="col-12 col-md-9">
                     <div className="row">
-                      {products.map(product => (
-                        <Products key={product._id} product={product} />
-                      ))}
+                      {products.length === 0 && hasActiveSearch ? (
+                        <div className="col-12">
+                          <div className="alert alert-info text-center" role="alert">
+                            No products found{normalizedKeyword ? ` for "${normalizedKeyword}"` : ""}.
+                          </div>
+                        </div>
+                      ) : (
+                        products.map(product => (
+                          <Products key={product._id} product={product} />
+                        ))
+                      )}
                     </div>
                   </div>
 

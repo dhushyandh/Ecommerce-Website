@@ -13,6 +13,7 @@ export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [didSubmit, setDidSubmit] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -24,17 +25,13 @@ export default function Login() {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setDidSubmit(true);
         dispatch(login(email, password))
     }
 
     useEffect(() => {
-
-
-        if (!loading && isAuthenticated) {
-            navigate(redirect)
-        }
-
         if (error) {
+            setDidSubmit(false);
             toast(error, {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -48,7 +45,21 @@ export default function Login() {
             })
             return;
         }
-    }, [error, isAuthenticated, loading, navigate, dispatch])
+
+        if (didSubmit && !loading && isAuthenticated) {
+            toast.success('Login successful', {
+                position: 'bottom-right',
+                autoClose: 2000,
+                theme: 'light',
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                closeOnClick: true,
+            });
+            setDidSubmit(false);
+            navigate(redirect);
+        }
+    }, [error, isAuthenticated, loading, navigate, dispatch, didSubmit, redirect])
     const googleLogin = () => {
         const base =
             process.env.REACT_APP_BACKEND_URL ||
@@ -92,18 +103,21 @@ export default function Login() {
                             />
                         </div>
 
-                        <Link to="/password/forget" className="float-right mb-4">Forgot Password?</Link>
+                        <div className="d-flex justify-content-between align-items-center mr-3 mb-4">
+                            <Link to="/password/forget">Forgot Password?</Link>
+                            <Link to={'/register'}>New User?</Link>
+                        </div>
 
                         <button
                             id="login_button"
                             type="submit"
-                            className="btn btn-block py-3"
+                            className="btn btn-block py-3 justify-content-center"
                             disabled={loading}
                         >
                             LOGIN
                         </button>
+                        <hr />
 
-                        <Link to={'/register'} className="float-right mt-3">New User?</Link>
                         <button
                             type="button"
                             onClick={googleLogin}
@@ -116,7 +130,7 @@ export default function Login() {
                             }}
                         >
                             <GoogleIcon size={20} />
-                            <span>Continue with Google</span>
+                            <span>Login with Google</span>
                         </button>
                     </form>
                 </div>

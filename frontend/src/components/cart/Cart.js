@@ -11,6 +11,7 @@ export default function Cart() {
 
   const dispatch = useDispatch();
   const { items = [] } = useSelector(state => state.cartState);
+  const { isAuthenticated } = useSelector(state => state.authState);
   const navigate = useNavigate();
 
   const increaseQty = (item) => {
@@ -24,16 +25,39 @@ export default function Cart() {
   };
 
   const checkOutHandler = () => {
-    navigate('/login?redirect=/shipping');
+    if (isAuthenticated) {
+      navigate('/shipping');
+      return;
+    }
+
+    navigate(`/login?redirect=${encodeURIComponent('/shipping')}`);
   };
 
   if (items.length === 0) {
-    return <h2 className="mt-5 text-center">Your Cart is Empty!</h2>;
+    return (
+      <div className="container mt-5">
+        <div className="text-center p-4">
+          <img
+            src="/images/empty_cart.svg"
+            alt="Your cart is empty"
+            className="img-fluid"
+            style={{ maxWidth: 420, width: '100%' }}
+          />
+          <h2 className="mt-4">Your Cart is Empty!</h2>
+          <p className="text-muted mt-2">Looks like you haven’t added anything yet.</p>
+          <Link to="/" className="btn btn-primary mt-2 justify-content-center" style={{ maxWidth: 260 }}>
+            Add products
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
     <Fragment>
-      <h2 className="mt-5">Your Cart: <b>{items.length}</b></h2>
+      <div className="cart-page-header">
+        <h2 className="mb-4 text-start">Your Cart: <b>{items.length}</b></h2>
+      </div>
 
       {/* ================= DESKTOP CART (UNCHANGED) ================= */}
       <div className="desktop-cart">
@@ -107,7 +131,7 @@ export default function Cart() {
               <button
                 id="checkout_btn"
                 onClick={checkOutHandler}
-                className="btn btn-primary btn-block"
+                className="btn btn-primary btn-block justify-content-center"
               >
                 Proceed to Checkout
               </button>

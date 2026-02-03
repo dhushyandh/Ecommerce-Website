@@ -65,6 +65,10 @@ export default function ReviewList() {
     }
 
     const deleteHandler = (e, id) => {
+        if (!window.confirm('Delete this review? This action cannot be undone.')) {
+            return;
+        }
+
         const btn = e.currentTarget;
         if (btn) btn.disabled = true;
         dispatch(deleteReview(productId, id));

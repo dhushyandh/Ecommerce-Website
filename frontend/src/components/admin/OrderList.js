@@ -51,7 +51,7 @@ export default function OrderList() {
             data.rows.push({
                 id: order._id,
                 numOfItems: order.orderItems.length,
-                amount: `$${order.totalPrice}`,
+                amount: `₹${order.totalPrice}`,
                 status: <p style={{ color: order.orderStatus.includes("Processing") ? 'red' : 'green' }}>{order.orderStatus}</p>,
                 actions: (
                     <Fragment>
@@ -69,7 +69,12 @@ export default function OrderList() {
     }
 
     const deleteHandler = (e, id) => {
-        e.target.disabled = true;
+        if (!window.confirm('Delete this order? This action cannot be undone.')) {
+            return;
+        }
+
+        const btn = e.currentTarget;
+        if (btn) btn.disabled = true;
         dispatch(deleteOrderAction(id));
     }
 

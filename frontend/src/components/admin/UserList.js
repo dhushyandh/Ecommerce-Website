@@ -68,7 +68,12 @@ export default function UserList() {
     }
 
     const deleteHandler = (e, id) => {
-        e.target.disabled = true;
+        if (!window.confirm('Delete this user? This action cannot be undone.')) {
+            return;
+        }
+
+        const btn = e.currentTarget;
+        if (btn) btn.disabled = true;
         dispatch(deleteUser(id));
     }
 

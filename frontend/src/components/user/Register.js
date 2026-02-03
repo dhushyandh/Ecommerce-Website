@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearAuthError, register } from "../../actions/userActions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import GoogleIcon from "../icons/GoogleIcon";
 
 export default function Register() {
 
@@ -73,6 +74,17 @@ export default function Register() {
 
     }, [error, isAuthenticated, dispatch, navigate])
 
+    const googleLogin = () => {
+        const base =
+            process.env.REACT_APP_BACKEND_URL ||
+            (window.location.hostname === "localhost"
+                ? "http://localhost:8000"
+                : window.location.origin);
+
+        const redirect = encodeURIComponent(window.location.origin);
+        window.location.href = `${base}/api/auth/google?redirect=${redirect}`;
+    };
+
 
     return (
         <div className="row wrapper">
@@ -139,10 +151,27 @@ export default function Register() {
                     <button
                         id="register_button"
                         type="submit"
-                        className="btn btn-block py-3"
+                        className="btn btn-block py-3 justify-content-center"
                         disabled={loading}
                     >
                         REGISTER
+                    </button>
+
+                    <hr />
+
+                    <button
+                        type="button"
+                        onClick={googleLogin}
+                        className="btn btn-light btn-block py-3 mt-3 d-flex align-items-center justify-content-center gap-2"
+                        style={{
+                            border: "1px solid #ddd",
+                            backgroundColor: "#fff",
+                            color: "#000",
+                            fontWeight: "500",
+                        }}
+                    >
+                        <GoogleIcon size={20} />
+                        <span>Sign Up with Google</span>
                     </button>
                 </form>
             </div>

@@ -14,9 +14,16 @@
   box-sizing: border-box
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -357,9 +364,6 @@ body {
   font-weight: 700
 }
 
-.ui-btn:hover {
-  background: rgba(255, 255, 255, 0.09)
-}
 
 .ui-badge {
   background: var(--accent);
@@ -1284,7 +1288,10 @@ body {
   grid-template-columns: 1fr 420px;
   gap: 2rem;
   align-items: stretch;
-  margin: 2rem 0
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem
 }
 
 .product-gallery {
@@ -1374,6 +1381,36 @@ body {
   width: 64px;
   text-align: center;
   border-radius: 8px
+}
+
+/* Product detail: qty + add-to-cart row */
+.product-buy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: .75rem;
+}
+
+.product-buy-row #cart_btn {
+  justify-content: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .product-buy-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .product-buy-row .stockCounter {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .product-buy-row #cart_btn {
+    width: 100%;
+  }
 }
 
 .add-to-cart {
@@ -1623,6 +1660,16 @@ body {
 }
 
 /* Cart */
+.cart-page-header {
+  max-width: 1200px;
+  margin: 2.5rem auto 0.75rem;
+  padding: 0 1rem;
+}
+
+.cart-page-header h2 {
+  font-weight: 900;
+}
+
 .cart-item {
   margin: 1.2rem 0;
   padding: .6rem;
@@ -3202,8 +3249,9 @@ ul.CTAs a {
     height: 64px;
     background: #232f3e;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 8px;
     z-index: 999;
     box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
   }
@@ -3218,10 +3266,33 @@ ul.CTAs a {
     gap: 2px;
     position: relative;
     opacity: 0.85;
+    flex: 1;
+    min-width: 0;
   }
 
-  .mobile-bottom-nav a span {
+  /* Normalize icon slot so avatar aligns with emoji icons */
+  .mobile-bottom-nav a > span {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
     font-size: 1.25rem;
+  }
+
+  .mobile-bottom-nav a > img.mobile-nav-avatar {
+    width: 26px;
+    height: 26px;
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 5px;
+  }
+
+  .mobile-bottom-nav a > small {
+    line-height: 1;
+
   }
 
   .mobile-bottom-nav a.active {
@@ -3243,8 +3314,8 @@ ul.CTAs a {
 }
 
 .mobile-bottom-nav .mobile-nav-avatar {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   object-fit: cover;
   display: block;

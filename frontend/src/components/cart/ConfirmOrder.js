@@ -85,7 +85,7 @@ export default function ConfirmOrder() {
                         <p>Total: <span className="order-summary-values">₹{totalPrice}</span></p>
 
                         <hr />
-                        <button id="checkout_btn" onClick={ProcessPayment} className="btn btn-primary btn-block">Proceed to Payment</button>
+                        <button id="checkout_btn" onClick={ProcessPayment} className="btn btn-primary btn-block justify-content-center">Proceed to Payment</button>
                     </div>
                 </div>
 

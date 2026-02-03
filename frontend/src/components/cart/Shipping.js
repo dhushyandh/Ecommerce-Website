@@ -136,7 +136,7 @@ export default function Shipping() {
                         <button
                             id="shipping_btn"
                             type="submit"
-                            className="btn btn-block py-3"
+                            className="btn btn-block py-3 text-white justify-content-center"
                         >
                             CONTINUE
                         </button>

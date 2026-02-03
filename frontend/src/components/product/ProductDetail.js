@@ -82,7 +82,6 @@ export default function ProductDetail() {
                 dispatch(clearProduct());
             }
         }
-        // Reset selected image when product changes
         setSelectedImageIndex(0);
     }, [id, dispatch, isReviewSubmitted, error]);
 
@@ -136,7 +135,7 @@ export default function ProductDetail() {
                                     <div className="price">₹{product?.price ?? 0}</div>
                                     <div className="stock-info">Status: <span className={((product?.stock ?? 0) > 0) ? 'greenColor' : 'redColor'} id="stock_status">{(product?.stock ?? 0) > 0 ? 'In Stock' : 'Out of Stock'}</span></div>
 
-                                    <div className="d-flex align-items-center justify-content-between w-100 mt-2">
+                                    <div className="product-buy-row mt-2">
                                         <div className="stockCounter">
                                             <button className="btn btn-ghost minus" onClick={decreaseQuantity}>-</button>
                                             <input type="number" className="form-control count" value={quantity} readOnly />

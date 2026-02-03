@@ -145,7 +145,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* ================= MOBILE PROFILE (NO SCROLL) ================= */}
+      {/* ================= MOBILE PROFILE  ================= */}
       <div className="mobile-profile">
         <div className="profile-card">
           <div style={{ position: 'relative' }}>
@@ -195,17 +195,17 @@ export default function Profile() {
           </p>
 
           <div className="profile-actions">
-            <Link to="/myprofile/update" className="btn btn-primary btn-block">
+            <Link to="/myprofile/update" className="btn btn-primary btn-block justify-content-center">
               Edit Profile
             </Link>
 
-            <Link to="/orders" className="btn btn-outline-dark btn-block">
+            <Link to="/orders" className="btn btn-outline-dark btn-block justify-content-center">
               My Orders
             </Link>
 
             <Link
               to="/myprofile/update/password"
-              className="btn btn-danger btn-block"
+              className="btn btn-danger btn-block justify-content-center"
             >
               Change Password
             </Link>
@@ -213,12 +213,12 @@ export default function Profile() {
               <>
                 <Link
                   to="/admin/dashboard"
-                  className="btn btn-dark"
+                  className="btn btn-dark justify-content-center"
                 >
                   Admin Dashboard
                 </Link>
                 {isAuthenticated && (
-                  <button type="button" className="btn btn-danger btn-block" onClick={logoutHandler}>
+                  <button type="button" className="btn btn-danger btn-block justify-content-center" onClick={logoutHandler}>
                     Logout
                   </button>
                 )}

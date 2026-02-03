@@ -171,7 +171,7 @@ export default function Cart() {
           </div>
         ))}
 
-        <button className="mobile-checkout" onClick={checkOutHandler}>
+        <button className="mobile-checkout text-white" onClick={checkOutHandler}>
           Proceed to Checkout
         </button>
       </div>

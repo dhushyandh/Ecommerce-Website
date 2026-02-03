@@ -28,8 +28,10 @@ export default function BottomNav() {
       </Link>
 
       <Link to="/cart" className={location.pathname === "/cart" ? "active" : ""}>
-        <span>🛒</span>
-        {items.length > 0 && <b className="cart-dot">{items.length}</b>}
+        <span className="mobile-nav-icon">
+          🛒
+          {items.length > 0 && <b className="cart-dot">{items.length}</b>}
+        </span>
         <small>Cart</small>
       </Link>
 

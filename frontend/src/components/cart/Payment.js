@@ -78,14 +78,14 @@ export default function Payment() {
     return (
         <div className="row wrapper">
             <div className="col-10 col-lg-5">
-                <form onSubmit={submitHandler} className="shadow-lg">
+                <form onSubmit={submitHandler} className="shadow-lg ">
                     <h1 className="mb-4">Payment</h1>
                     <p className="mb-4">You will be redirected to Stripe Checkout to complete payment securely.</p>
 
                     <button
                         id="pay_btn"
                         type="submit"
-                        className="btn btn-block py-3"
+                        className="btn btn-block py-3 justify-content-center"
                         disabled={isRedirecting}
                     >
                         {isRedirecting ? 'Redirecting…' : `Pay with Stripe - ₹${orderInfo && orderInfo.totalPrice}`}

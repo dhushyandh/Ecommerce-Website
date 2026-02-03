@@ -67,7 +67,7 @@ export default function UserOrders() {
       </div>
 
       {/* ================= MOBILE CARDS ================= */}
-      <div className="mobile-orders">
+      <div className="mobile-orders ">
         {userOrders.map(order => (
           <div className="order-card" key={order._id}>
             <div className="order-row">
@@ -100,7 +100,7 @@ export default function UserOrders() {
 
             <Link
               to={`/order/${order._id}`}
-              className="btn btn-block order-btn"
+              className="btn btn-block order-btn justify-content-center text-white"
             >
               View Order
             </Link>

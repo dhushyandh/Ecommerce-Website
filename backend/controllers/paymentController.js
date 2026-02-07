@@ -204,3 +204,72 @@ exports.validateStripeKey = catchAsyncError(async (req, res, next) => {
         throw err;
     }
 });
+
+exports.createRazorpayOrder = catchAsyncError(async (req, res, next) => {
+    const razorpayKey = process.env.RAZORPAY_KEY_ID;
+    const razorpaySecret = process.env.RAZORPAY_SECRET;
+    if (!razorpayKey || !razorpaySecret) {
+        return next(new ErrorHandler('Razorpay keys not configured. Set RAZORPAY_KEY_ID and RAZORPAY_SECRET in environment.', 500));
+    }
+
+    const { cartItems } = req.body;
+    if (!Array.isArray(cartItems) || cartItems.length === 0) {
+        return next(new ErrorHandler('Cart is empty', 400));
+    }
+
+    const normalizedItems = cartItems.map((item) => ({
+        product: (item?.product || '').toString().trim(),
+        quantity: Number(item?.quantity || 0)
+    }));
+
+    for (const item of normalizedItems) {
+        if (!item.product || item.product.length !== 24) {
+            return next(new ErrorHandler('Invalid cart item product id', 400));
+        }
+        if (!Number.isFinite(item.quantity) || item.quantity <= 0) {
+            return next(new ErrorHandler('Invalid cart item quantity', 400));
+        }
+    }
+
+    const productIds = normalizedItems.map((i) => i.product);
+    const products = await Product.find({ _id: { $in: productIds } }).select('name price images stock');
+    const productById = new Map(products.map((p) => [p._id.toString(), p]));
+
+    let itemsTotalPaise = 0;
+    for (const item of normalizedItems) {
+        const product = productById.get(item.product);
+        if (!product) {
+            return next(new ErrorHandler('One or more products in your cart no longer exist', 400));
+        }
+        if (typeof product.stock === 'number' && product.stock < item.quantity) {
+            return next(new ErrorHandler(`Insufficient stock for ${product.name}`, 400));
+        }
+
+        const unitAmountPaise = toPaise(product.price);
+        itemsTotalPaise += unitAmountPaise * item.quantity;
+    }
+
+    const shippingPaise = itemsTotalPaise > 20000 ? 0 : 2500;
+    const taxPaise = Math.round(itemsTotalPaise * 0.05);
+
+    const totalPaise = itemsTotalPaise + shippingPaise + taxPaise;
+
+    const Razorpay = require('razorpay');
+    const instance = new Razorpay({ key_id: razorpayKey, key_secret: razorpaySecret });
+
+    const orderOptions = {
+        amount: totalPaise,
+        currency: 'INR',
+        receipt: `rcpt_${Date.now()}`
+    };
+
+    const order = await instance.orders.create(orderOptions);
+
+    res.status(200).json({
+        success: true,
+        id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+        razorpayKey: razorpayKey
+    });
+});

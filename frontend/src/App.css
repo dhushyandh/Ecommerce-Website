@@ -180,7 +180,8 @@ body {
 .team-avatar {
   width: 140px;
   height: 140px;
-  border-radius: 9999px; /* rounded-full */
+  border-radius: 9999px;
+  /* rounded-full */
   object-fit: cover;
   border: 4px solid rgba(255, 255, 255, 0.95);
   box-shadow: 0 10px 28px rgba(16, 24, 40, 0.12);
@@ -216,6 +217,7 @@ body {
   .about-highlights {
     grid-template-columns: 1fr;
   }
+
   .team-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -225,6 +227,7 @@ body {
   .team-row {
     grid-template-columns: 1fr;
   }
+
   .team-avatar {
     width: 120px;
     height: 120px;
@@ -234,9 +237,11 @@ body {
 .ui-brand {
   display: flex;
   align-items: center;
-  height: 64px; /* keep brand container same as nav height */
+  height: 64px;
+  /* keep brand container same as nav height */
   flex: 0 0 auto;
-  position: relative; /* allow logo to be positioned/overflow */
+  position: relative;
+  /* allow logo to be positioned/overflow */
   overflow: visible;
 }
 
@@ -295,7 +300,7 @@ body {
 
 #search_field {
   height: 44px;
- 
+
   line-height: 44px;
   border-radius: 999px;
   padding-left: 46px;
@@ -388,6 +393,7 @@ body {
   background: rgba(250, 156, 35, 0.06);
   color: var(--primary-dark)
 }
+
 /* =====================================
    ADMIN – UPDATE ORDER STATUS UI
 ===================================== */
@@ -397,7 +403,7 @@ body {
   background: #ffffff;
   border-radius: 16px;
   padding: 2.2rem;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
 }
 
 /* Title */
@@ -420,7 +426,7 @@ body {
   color: #111827;
 
   background-color: #ffffff;
-  border: 1.5px solid rgba(0,0,0,0.15);
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px;
 
   appearance: none;
@@ -439,7 +445,7 @@ body {
 .update-order-container select:focus {
   outline: none;
   border-color: #f59e0b;
-  box-shadow: 0 0 0 4px rgba(245,158,11,0.25);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
 }
 
 /* Dropdown arrow */
@@ -473,7 +479,7 @@ body {
 /* Button hover */
 .update-order-container button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(249,115,22,0.4);
+  box-shadow: 0 12px 30px rgba(249, 115, 22, 0.4);
 }
 
 /* Button disabled */
@@ -500,11 +506,14 @@ body {
 .ui-brand img {
   max-width: none !important;
   filter: none !important;
-  height: 80px !important; /* visually larger than nav */
+  height: 80px !important;
+  /* visually larger than nav */
   max-height: 80px !important;
   width: auto !important;
-  margin-left: 16px !important; /* nudge logo slightly right */
-  margin-top: -12px !important; /* allow logo to overflow nav without increasing nav height */
+  margin-left: 16px !important;
+  /* nudge logo slightly right */
+  margin-top: -12px !important;
+  /* allow logo to overflow nav without increasing nav height */
   display: block !important;
   border-radius: 6px !important;
   transition: transform .22s ease !important;
@@ -2217,7 +2226,8 @@ footer {
    Scoped to small screens so desktop remains unchanged */
 @media (max-width: 576px) {
   .row.wrapper {
-    min-height: calc(100vh - 56px); /* account for header */
+    min-height: calc(100vh - 56px);
+    /* account for header */
     margin-top: 0 !important;
     padding: 0.75rem !important;
     align-items: center !important;
@@ -3159,13 +3169,13 @@ ul.CTAs a {
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   color: #fff;
   transition: background 0.18s ease, transform 0.12s ease;
 }
 
 .footer-social .social-link:hover {
-  background: rgba(250,156,35,0.12);
+  background: rgba(250, 156, 35, 0.12);
   transform: translateY(-2px);
 }
 
@@ -3223,9 +3233,11 @@ ul.CTAs a {
     margin-top: 1rem;
   }
 }
-.mobile-bottom-nav{
+
+.mobile-bottom-nav {
   display: none;
 }
+
 /* ===============================
    AMAZON STYLE MOBILE BOTTOM NAV
 ================================ */
@@ -3253,7 +3265,7 @@ ul.CTAs a {
     align-items: center;
     padding: 0 8px;
     z-index: 999;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
   }
 
   .mobile-bottom-nav a {
@@ -3271,7 +3283,7 @@ ul.CTAs a {
   }
 
   /* Normalize icon slot so avatar aligns with emoji icons */
-  .mobile-bottom-nav a > span {
+  .mobile-bottom-nav a>span {
     width: 26px;
     height: 26px;
     display: flex;
@@ -3281,11 +3293,11 @@ ul.CTAs a {
     font-size: 1.25rem;
   }
 
-  .mobile-bottom-nav a > span.mobile-nav-icon {
+  .mobile-bottom-nav a>span.mobile-nav-icon {
     position: relative;
   }
 
-  .mobile-bottom-nav a > img.mobile-nav-avatar {
+  .mobile-bottom-nav a>img.mobile-nav-avatar {
     width: 26px;
     height: 26px;
     display: block;
@@ -3294,7 +3306,7 @@ ul.CTAs a {
     margin-top: 5px;
   }
 
-  .mobile-bottom-nav a > small {
+  .mobile-bottom-nav a>small {
     line-height: 1;
 
   }
@@ -3347,6 +3359,7 @@ ul.CTAs a {
   font-size: 22px;
   line-height: 1;
 }
+
 /* =====================================================
    AMAZON MOBILE HEADER – FINAL CLEAN OVERRIDE
    ONLY MOBILE | DESKTOP UNTOUCHED
@@ -3361,12 +3374,13 @@ ul.CTAs a {
     align-items: center !important;
     gap: 6px !important;
     padding: 6px 8px !important;
-    height: 52px !important;           /* Amazon height */
+    height: 52px !important;
+    /* Amazon height */
     background: #131921 !important;
   }
 
   /* KILL bootstrap columns */
-  .ui-nav > div {
+  .ui-nav>div {
     width: auto !important;
     max-width: none !important;
     padding: 0 !important;
@@ -3422,7 +3436,8 @@ ul.CTAs a {
   }
 
   .ui-user-area span {
-    display: none !important;   /* hide username */
+    display: none !important;
+    /* hide username */
   }
 
   .avatar-nav {
@@ -3467,7 +3482,7 @@ ul.CTAs a {
   background: #fff;
   border-radius: 14px;
   padding: 1.5rem;
-  box-shadow: 0 18px 40px rgba(2,6,23,0.08);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.08);
   text-align: center;
 }
 
@@ -3483,28 +3498,65 @@ ul.CTAs a {
   margin-top: 1rem;
 }
 
-.filter-column { text-align: left; }
-.filter-title { font-weight: 800; margin-bottom: 0.5rem; }
-.filter-item { cursor: pointer; list-style: none; padding: 6px 0; color: var(--primary-dark); }
-.filter-item:hover { color: var(--accent-600); }
-.rating-filter .rating-outer.small { height: 12px; }
+.filter-column {
+  text-align: left;
+}
 
-.popular-searches .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:0.5rem; justify-content:center; }
+.filter-title {
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.filter-item {
+  cursor: pointer;
+  list-style: none;
+  padding: 6px 0;
+  color: var(--primary-dark);
+}
+
+.filter-item:hover {
+  color: var(--accent-600);
+}
+
+.rating-filter .rating-outer.small {
+  height: 12px;
+}
+
+.popular-searches .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
 .popular-searches .tag {
-  background: rgba(250,156,35,0.08);
-  border: 1px solid rgba(250,156,35,0.12);
+  background: rgba(250, 156, 35, 0.08);
+  border: 1px solid rgba(250, 156, 35, 0.12);
   padding: 6px 10px;
   border-radius: 999px;
   cursor: pointer;
-  font-weight:700;
+  font-weight: 700;
 }
-.popular-searches .tag:hover { background: rgba(250,156,35,0.14); }
+
+.popular-searches .tag:hover {
+  background: rgba(250, 156, 35, 0.14);
+}
 
 @media (max-width: 768px) {
-  .filters-grid { grid-template-columns: 1fr; }
-  .empty-card { padding: 1rem; }
-  .empty-card .empty-hero { font-size: 2.4rem; }
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empty-card {
+    padding: 1rem;
+  }
+
+  .empty-card .empty-hero {
+    font-size: 2.4rem;
+  }
 }
+
 /* =====================================================
    CART – FINAL MOBILE ALIGNMENT FIX
    Desktop NOT affected
@@ -3519,11 +3571,11 @@ ul.CTAs a {
     background: transparent;
   }
 
-  .cart-item > .row {
+  .cart-item>.row {
     background: #ffffff;
     border-radius: 16px;
     padding: 1rem;
-    box-shadow: 0 12px 30px rgba(2,6,23,0.10);
+    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.10);
 
     display: grid;
     grid-template-columns: 90px 1fr;
@@ -3582,7 +3634,7 @@ ul.CTAs a {
     border-radius: 10px;
     font-weight: 900;
     padding: 0;
-    background: rgba(250,156,35,0.15);
+    background: rgba(250, 156, 35, 0.15);
     border: none;
     color: #232f3e;
   }
@@ -3592,7 +3644,7 @@ ul.CTAs a {
     width: 44px;
     height: 34px;
     border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.15);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     font-weight: 800;
     text-align: center;
   }
@@ -3603,7 +3655,7 @@ ul.CTAs a {
     width: 34px;
     height: 34px;
     border-radius: 10px;
-    background: rgba(239,68,68,0.15);
+    background: rgba(239, 68, 68, 0.15);
     color: #ef4444;
     display: flex;
     align-items: center;
@@ -3615,7 +3667,7 @@ ul.CTAs a {
     margin-top: 1.8rem;
     border-radius: 18px;
     padding: 1.3rem;
-    box-shadow: 0 12px 36px rgba(2,6,23,0.12);
+    box-shadow: 0 12px 36px rgba(2, 6, 23, 0.12);
   }
 
   /* Checkout button */
@@ -3629,6 +3681,7 @@ ul.CTAs a {
     margin-top: 1rem;
   }
 }
+
 /* =====================================
    MY ORDERS – MOBILE CARD UI
 ===================================== */
@@ -3664,7 +3717,7 @@ ul.CTAs a {
     background: #ffffff;
     border-radius: 14px;
     padding: 1rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
@@ -3705,12 +3758,12 @@ ul.CTAs a {
   }
 
   .status.delivered {
-    background: rgba(16,185,129,0.15);
+    background: rgba(16, 185, 129, 0.15);
     color: #10b981;
   }
 
   .status.pending {
-    background: rgba(239,68,68,0.15);
+    background: rgba(239, 68, 68, 0.15);
     color: #ef4444;
   }
 
@@ -3724,6 +3777,7 @@ ul.CTAs a {
     border: none;
   }
 }
+
 /* =========================
    CART – MOBILE CARDS UI
 ========================= */
@@ -3752,7 +3806,7 @@ ul.CTAs a {
     background: #fff;
     padding: 0.75rem;
     border-radius: 14px;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
   }
 
   .mobile-cart-card img {
@@ -3801,7 +3855,7 @@ ul.CTAs a {
     width: 28px;
     height: 28px;
     border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.12);
+    border: 1px solid rgba(0, 0, 0, 0.12);
     background: #fff;
     font-weight: 900;
   }
@@ -3829,6 +3883,7 @@ ul.CTAs a {
     font-weight: 900;
   }
 }
+
 /* =========================
    PROFILE – MOBILE PERFECT FIT
 ========================= */
@@ -3849,7 +3904,8 @@ ul.CTAs a {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px); /* NO SCROLL */
+    min-height: calc(100vh - 80px);
+    /* NO SCROLL */
     padding: 1rem;
   }
 
@@ -3859,7 +3915,7 @@ ul.CTAs a {
     background: #ffffff;
     border-radius: 18px;
     padding: 1.4rem;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
     text-align: center;
   }
 
@@ -3903,6 +3959,7 @@ ul.CTAs a {
     padding: 0.55rem 0;
   }
 }
+
 /* ============================
    REVIEW MODAL – PREMIUM UI
 ============================ */
@@ -3910,7 +3967,7 @@ ul.CTAs a {
 .review-modal .modal-content {
   border-radius: 18px;
   border: none;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 }
 
 .review-modal-header {
@@ -3981,14 +4038,14 @@ ul.CTAs a {
 .review-textarea {
   resize: none;
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   padding: 0.6rem 0.75rem;
   font-size: 0.9rem;
 }
 
 .review-textarea:focus {
   border-color: #fa9c23;
-  box-shadow: 0 0 0 3px rgba(250,156,35,0.2);
+  box-shadow: 0 0 0 3px rgba(250, 156, 35, 0.2);
 }
 
 .char-count {
@@ -4027,6 +4084,7 @@ ul.CTAs a {
     font-size: 1.7rem;
   }
 }
+
 /* =====================================================
    MOBILE SEARCH PAGE FIXES (DESKTOP UNTOUCHED)
 ===================================================== */
@@ -4132,6 +4190,7 @@ ul.CTAs a {
     justify-content: center;
   }
 }
+
 /* =====================================================
    MOBILE SEARCH FLOW – SAFE (NO DESKTOP IMPACT)
 ===================================================== */
@@ -4197,11 +4256,13 @@ ul.CTAs a {
 
 /* Desktop untouched */
 @media (min-width: 769px) {
+
   .mobile-back-header,
   .mobile-only {
     display: none !important;
   }
 }
+
 /* ===== DESKTOP & MOBILE VISIBILITY FIX ===== */
 
 /* Desktop: show filters */
@@ -4215,6 +4276,7 @@ ul.CTAs a {
     display: none;
   }
 }
+
 /* =====================================
    FOOTER – 3 ROW MINIMAL (MOBILE)
    DESKTOP UNTOUCHED
@@ -4283,10 +4345,6 @@ ul.CTAs a {
   }
 }
 
-/* =====================
-   TOASTIFY (GLOBAL)
-   Smaller + cleaner on mobile
-===================== */
 
 .Toastify__toast-container {
   z-index: 10000;
@@ -4296,71 +4354,79 @@ ul.CTAs a {
   .Toastify__toast-container {
     width: 92vw;
     max-width: 320px;
-    padding: 0;
-  }
-
-  /* Keep requested placement on mobile */
-  .Toastify__toast-container--bottom-right,
-  .Toastify__toast-container--top-right {
-    right: 12px;
-    left: auto;
-    transform: none;
-  }
-
-  .Toastify__toast-container--bottom-left,
-  .Toastify__toast-container--top-left {
-    left: 12px;
-    right: auto;
-    transform: none;
-  }
-
-  .Toastify__toast-container--bottom-center,
-  .Toastify__toast-container--top-center {
     left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    bottom: 13%;
+    transform: translateX(-35%);
+  }
+}
+
+.payment-card {
+  background: #fff;
+  border-radius: 8px;
+}
+
+.method-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  background: transparent;
+  cursor: pointer;
+  transition: all .12s ease-in-out;
+}
+
+.method-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.method-icon svg {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+.method-text {
+  text-align: left;
+}
+
+.method-title {
+  font-weight: 600;
+}
+
+.method-sub {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.method-badge {
+  background: #0d6efd;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+.method-btn.selected {
+  border-color: #0d6efd;
+  background: #f8fbff;
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 8px;
+}
+
+@media (max-width: 767px) {
+  .method-icon svg {
+    width: 42px;
+    height: 42px;
   }
 
-  .Toastify__toast-container--bottom-right,
-  .Toastify__toast-container--bottom-left,
-  .Toastify__toast-container--bottom-center {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 72px);
-  }
-
-  .Toastify__toast-container--top-right,
-  .Toastify__toast-container--top-left,
-  .Toastify__toast-container--top-center {
-    top: calc(env(safe-area-inset-top, 0px) + 12px);
-  }
-
-  .Toastify__toast {
-    margin: 0 0 8px 0;
-    padding: 10px 12px;
-    min-height: unset;
-    font-size: 0.85rem;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.14);
-  }
-
-  .Toastify__toast-body {
-    margin: 0;
-    padding: 0;
-    line-height: 1.35;
-    font-size: 0.85rem;
-  }
-
-  .Toastify__close-button {
-    opacity: 0.65;
-    width: 22px;
-    height: 22px;
-  }
-
-  .Toastify__close-button:hover {
-    opacity: 0.95;
-  }
-
-  .Toastify__progress-bar {
-    height: 2px;
+  .method-btn {
+    padding: 10px;
   }
 }

@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export default function Search() {
 
@@ -8,9 +10,14 @@ export default function Search() {
   const navigate = useNavigate();
   const location = useLocation();
   const [keyword, setKeyword] = useState("")
+  const { isAuthenticated } = useSelector(state => state.authState || {});
 
   const searchHandler = (e) => {
     e.preventDefault();
+    if (location.pathname === '/login' && !isAuthenticated) {
+      toast.info('Please login to access', { position: 'bottom-right' });
+      return;
+    }
     navigate(`/search/${keyword}`)
   }
 

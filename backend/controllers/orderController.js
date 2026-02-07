@@ -2,6 +2,7 @@ const catchAsyncError = require('../middlewares/catchAsyncError');
 const Order = require('../models/orderModel');
 const ErrorHandler = require('../utils/errorHandler')
 const productModel = require('../models/productModel');
+const sendEmail = require('../utils/email');
 
 // Create a new order -- {{base_url}}/api/v1/order/new
 exports.newOrder = catchAsyncError(async (req, res, next) => {
@@ -26,6 +27,25 @@ exports.newOrder = catchAsyncError(async (req, res, next) => {
         paidAt: Date.now(),
         user: req.user.id
     });
+
+
+    try {
+        const toEmail = req.user?.email;
+        if (toEmail) {
+            const itemsText = order.orderItems.map(i => `${i.name || i.product} — Qty: ${i.quantity} — ₹${i.price || ''}`).join('\n');
+            const shipping = order.shippingInfo || {};
+            const addr = `${shipping.address || ''} ${shipping.city || ''} ${shipping.state || ''} ${shipping.pinCode || ''} ${shipping.country || ''}`.trim();
+            const message = `Hello ${req.user?.name || ''},\n\nThank you for your order. Your order has been placed successfully.\n\nOrder ID: ${order._id}\nPlaced At: ${order.paidAt}\n\nItems:\n${itemsText}\n\nItems Price: ₹${order.itemsPrice || 0}\nTax: ₹${order.taxPrice || 0}\nShipping: ₹${order.shippingPrice || 0}\nTotal: ₹${order.totalPrice || 0}\n\nShipping Address:\n${addr}\n\nPayment Method: ${order.paymentInfo?.method || 'N/A'}\n\nYou can view your order in your account.\n\nThanks,\nVIP Store`;
+
+            await sendEmail({
+                email: toEmail,
+                subject: `Your order ${order._id} — Confirmation`,
+                message
+            });
+        }
+    } catch (err) {
+        console.error('[orderController] sendEmail error:', err);
+    }
 
     res.status(200).json({
         success: true,

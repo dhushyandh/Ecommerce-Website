@@ -1,9 +1,10 @@
 
 import Search from "./Search"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { Dropdown, Image } from "react-bootstrap"
 import { logout } from "../../actions/userActions"
+import { toast } from 'react-toastify'
 
 export default function Header() {
 
@@ -11,6 +12,7 @@ export default function Header() {
   const { isAuthenticated, user = {} } =
     useSelector(state => state.authState || {});
   const { items: cartItems } = useSelector(state => state.cartState || {})
+  const location = useLocation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,11 +22,13 @@ export default function Header() {
   }
 
 
+  const showLoginToast = (location.pathname === '/login' && !isAuthenticated);
+
   return (
     <nav className="navbar row ui-nav desktop-header">
       <div className="col-12 col-md-2">
         <div className="navbar-brand ui-brand">
-          <Link to="/">
+          <Link to="/" onClick={(e) => { if (showLoginToast) { e.preventDefault(); toast.info('Please login to access', { position: 'bottom-right' }); } }}>
             <img alt="VIPStore logo" src="/images/vipstore-logo.svg" className="ui-logo" />
           </Link>
         </div>
@@ -65,7 +69,7 @@ export default function Header() {
           <Link to="/login" className="btn ui-btn" id="login_btn">Login</Link>
         }
 
-        <Link to="/cart" id="cart" className="ml-3 ui-link">Cart</Link>
+        <Link to="/cart" id="cart" className="ml-3 ui-link" onClick={(e) => { if (showLoginToast) { e.preventDefault(); toast.info('Please login to access', { position: 'bottom-right' }); } }}>Cart</Link>
         <span className="ml-1 ui-badge" id="cart_count">{cartItems.length}</span>
       </div>
     </nav>

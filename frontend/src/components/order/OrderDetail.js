@@ -8,7 +8,8 @@ export default function OrderDetail() {
 
     const { orderDetail, loading } = useSelector(state => state.orderState);
     const { shippingInfo = {}, user = {}, orderStatus = "Processing", orderItems = [], totalPrice = 0, paymentInfo = {} } = orderDetail;
-    const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false;
+    const paidStatuses = ['succeeded', 'paid', 'captured'];
+    const isPaid = paymentInfo && paidStatuses.includes((paymentInfo.status || '').toString().toLowerCase()) ? true : false;
     const dispatch = useDispatch();
     const { id } = useParams();
 

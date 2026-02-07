@@ -2,8 +2,8 @@ export default function ProductReview({ reviews = [] }) {
     if (!reviews.length) return null;
 
     return (
-        <div className="reviews w-75">
-            <h3>Other's Reviews:</h3>
+        <div className="reviews container mt-4">
+            <h3>Other Reviews</h3>
             <hr />
 
             {reviews.map((review) => {
@@ -13,7 +13,7 @@ export default function ProductReview({ reviews = [] }) {
                         : "User";
 
                 return (
-                    <div key={review._id} className="review-card my-3">
+                    <div key={review._id} className="review-card my-3 p-3 bg-white rounded shadow-sm">
                         <div className="rating-outer">
                             <div
                                 className="rating-inner"

@@ -11,7 +11,8 @@ export default function UpdateOrder() {
 
     const { loading, isOrderUpdated = false, error, orderDetail } = useSelector(state => state.orderState);
     const { user = {}, orderItems = [], shippingInfo = {}, paymentInfo = {}, totalPrice = 0 } = orderDetail || {};
-    const isPaid = paymentInfo.status === "succeeded" ? true : false;
+    const paidStatuses = ['succeeded', 'paid', 'captured'];
+    const isPaid = paymentInfo && paidStatuses.includes((paymentInfo.status || '').toString().toLowerCase()) ? true : false;
     const { id: orderId } = useParams();
 
     const [orderStatus, setOrderStatus] = useState("Processing");

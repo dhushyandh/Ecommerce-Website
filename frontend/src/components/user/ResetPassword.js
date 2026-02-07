@@ -104,7 +104,7 @@ export default function ResetPassword() {
                     <button
                         id="new_password_button"
                         type="submit"
-                        className="btn btn-block py-3">
+                        className="btn btn-block py-3 justify-content-center">
                         Set Password
                     </button>
 

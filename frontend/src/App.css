@@ -4430,3 +4430,67 @@ ul.CTAs a {
     padding: 10px;
   }
 }
+
+/* Payment page — mobile improvements */
+@media (max-width: 767px) {
+  .row.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .payment-card, .summary-card {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .method-btn {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 10px;
+  }
+
+  .method-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .method-icon img,
+  .method-icon svg {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+  }
+
+  .method-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .method-title { font-size: 0.98rem }
+
+  .method-badge {
+    margin-left: 0.5rem;
+    margin-top: 0;
+    white-space: nowrap;
+  }
+
+  .summary-card .d-grid .btn {
+    width: 100%;
+  }
+
+
+  .payment-card h2 { font-size: 1.15rem }
+  .summary-card h4 { font-size: 1rem }
+
+
+  .Toastify__toast-container {
+    width: 92vw;
+    max-width: 360px;
+    left: 50%;
+    transform: translateX(-45%);
+  }
+}

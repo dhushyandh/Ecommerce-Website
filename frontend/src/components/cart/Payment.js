@@ -233,7 +233,7 @@ export default function Payment() {
                     <h4 className="mb-3">Order Summary</h4>
                     <div className="d-flex justify-content-between mb-2"><span>Items</span><strong>{cartItems.reduce((acc, i) => acc + (i.quantity || 0), 0)} Units</strong></div>
                     <div className="d-flex justify-content-between mb-2"><span>Subtotal</span><strong>₹{orderInfo?.itemsPrice ?? orderInfo?.subtotal ?? cartItems.reduce((acc, i) => acc + (i.price || 0) * (i.quantity || 0), 0)}</strong></div>
-                    <div className="d-flex justify-content-between mb-2"><span>Shipping</span><strong>₹{orderInfo?.shippingPrice ?? orderInfo?.shippingCharges ?? (displayTotal > 20000 ? 0 : 25)}</strong></div>
+                    <div className="d-flex justify-content-between mb-2"><span>Shipping</span><strong>₹{orderInfo?.shippingPrice ?? orderInfo?.shippingCharges ?? (displayTotal < 200 ? 25 : 0)}</strong></div>
                     <div className="d-flex justify-content-between mb-3"><span>Tax</span><strong>₹{orderInfo?.taxPrice ?? Math.round((orderInfo?.itemsPrice ?? displayTotal) * 0.05)}</strong></div>
                     <hr />
                     <div className="d-flex justify-content-between mb-3"><span className="h5">Total</span><span className="h5">₹{displayTotal}</span></div>
@@ -257,7 +257,7 @@ export default function Payment() {
                                 try {
                                     const itemsPrice = orderInfo?.itemsPrice ?? orderInfo?.subtotal ?? displayTotal;
                                     const taxPrice = orderInfo?.taxPrice ?? Math.round((orderInfo?.itemsPrice ?? itemsPrice) * 0.05);
-                                    const shippingPrice = orderInfo?.shippingPrice ?? orderInfo?.shippingCharges ?? (displayTotal > 20000 ? 0 : 25);
+                                    const shippingPrice = orderInfo?.shippingPrice ?? orderInfo?.shippingCharges ?? (displayTotal < 200 ? 25 : 0);
 
                                     const payload = {
                                         orderItems: cartItems,

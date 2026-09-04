@@ -3238,6 +3238,131 @@ ul.CTAs a {
   display: none;
 }
 
+/* Legal pages */
+.legal-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 1rem;
+}
+
+.legal-header {
+  max-width: 760px;
+  padding: 1.5rem 0 2.25rem;
+  border-bottom: 1px solid rgba(16, 24, 40, 0.1);
+}
+
+.legal-eyebrow {
+  margin: 0 0 .75rem;
+  color: var(--accent-600);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.legal-header h1 {
+  margin: 0 0 .75rem;
+  color: var(--primary-dark);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.legal-intro {
+  max-width: 680px;
+  margin: 0 0 .85rem;
+  color: #4b5563;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.legal-updated {
+  margin: 0;
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.legal-layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 720px);
+  gap: 3.5rem;
+  align-items: start;
+  padding: 2.5rem 0;
+}
+
+.legal-index {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(250, 156, 35, .35);
+}
+
+.legal-index span {
+  margin-bottom: .2rem;
+  color: var(--primary-dark);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+
+.legal-index a {
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.legal-index a:hover {
+  color: var(--accent-600);
+}
+
+.legal-content section {
+  scroll-margin-top: 96px;
+  margin-bottom: 2.35rem;
+}
+
+.legal-content h2 {
+  margin: 0 0 .75rem;
+  color: var(--primary-dark);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.legal-content p,
+.legal-content li {
+  color: #4b5563;
+  font-size: .97rem;
+  line-height: 1.8;
+}
+
+.legal-content p {
+  margin: 0 0 .9rem;
+}
+
+.legal-content ul {
+  margin: 0;
+  padding-left: 1.3rem;
+}
+
+@media (max-width: 768px) {
+  .legal-page {
+    padding-top: 1rem;
+  }
+
+  .legal-layout {
+    display: block;
+    padding-top: 1.75rem;
+  }
+
+  .legal-index {
+    position: static;
+    margin-bottom: 2.5rem;
+  }
+}
+
 /* ===============================
    AMAZON STYLE MOBILE BOTTOM NAV
 ================================ */

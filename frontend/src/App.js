@@ -41,6 +41,8 @@ import NotFound from './components/layouts/NotFound';
 import About from './components/layouts/About';
 import StripeCheckoutSuccess from './components/cart/StripeCheckoutSuccess';
 import StripeCheckoutCancel from './components/cart/StripeCheckoutCancel';
+import PrivacyPolicy from './components/layouts/PrivacyPolicy';
+import TermsAndConditions from './components/layouts/TermsAndConditions';
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +62,8 @@ function App() {
             <Routes>
               <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path='/about' element={<About />} />
+              <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+              <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
               <Route path='/search/:keyword' element={<ProductSearch />} />
               <Route path='/search' element={<ProductSearch />} />
               <Route path='/product/:id' element={<ProductDetail />} />

@@ -11,6 +11,8 @@ export default function Footer() {
           <h4>Get to Know Us</h4>
           <ul>
             <li><Link to="/about">About Vipstore-Ecom</Link></li>
+            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+            <li><Link to="/terms-and-conditions">Terms and Conditions</Link></li>
             <li><a href="/">Careers</a></li>
             <li><a href="/">Press Releases</a></li>
             <li><a href="/">Vipstore Science</a></li>

@@ -1,0 +1,12 @@
+.payment-card { background: #fff; border-radius: 8px; }
+.method-btn { display:flex; align-items:center; justify-content:space-between; padding:12px; border-radius:8px; border:1px solid #e9ecef; background:transparent; cursor:pointer; transition:all .12s ease-in-out; }
+.method-left { display:flex; align-items:center; gap:12px; }
+.method-icon svg { width:48px; height:48px; display:block; }
+.method-icon img { width:48px; height:48px; display:block; object-fit:contain }
+.method-text { text-align:left; }
+.method-title { font-weight:600; }
+.method-sub { font-size:0.85rem; color:#6c757d; }
+.method-badge { background:#0d6efd; color:#fff; padding:4px 8px; border-radius:12px; font-size:0.75rem; }
+.method-btn.selected { border-color:#0d6efd; background:#f8fbff; }
+.summary-card { background:#fff; border-radius:8px; }
+@media (max-width: 767px) { .method-icon svg, .method-icon img { width:42px; height:42px; } .method-btn { padding:10px; } }
